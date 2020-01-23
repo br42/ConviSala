@@ -1,4 +1,4 @@
-package br.com.wise.convisala;
+package br.com.wises.convisala;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package br.com.wise.convisala.ui.home;
+package br.com.wises.convisala.ui.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

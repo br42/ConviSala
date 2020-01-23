@@ -1,4 +1,4 @@
-package br.com.wise.convisala.ui.login;
+package br.com.wises.convisala.ui.login;
 
 import android.content.Context;
 import android.net.Uri;
@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import br.com.wise.convisala.R;
+import br.com.wises.convisala.R;
 
 /**
  * A simple {@link Fragment} subclass.

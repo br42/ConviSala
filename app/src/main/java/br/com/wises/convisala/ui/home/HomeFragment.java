@@ -1,18 +1,19 @@
-package br.com.wise.convisala.ui.home;
+package br.com.wises.convisala.ui.home;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
-import br.com.wise.convisala.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import br.com.wises.convisala.R;
 
 public class HomeFragment extends Fragment {
 
@@ -30,6 +31,23 @@ public class HomeFragment extends Fragment {
         //        textView.setText(s);
         //    }
         //});
+
+
+
+        FloatingActionButton fab = (new FloatingActionButton(getContext())).findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    //.setAction("Action", null).show();
+
+                }
+            });
+        }
+
+        startActivity(new Intent("br.com.wises.convisala.ui.home.HomeActivity"));
+
         return root;
     }
 }

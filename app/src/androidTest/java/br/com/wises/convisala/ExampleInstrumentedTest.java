@@ -1,4 +1,4 @@
-package br.com.wise.convisala;
+package br.com.wises.convisala;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("br.com.wise.convisala", appContext.getPackageName());
+        assertEquals("br.com.wises.convisala", appContext.getPackageName());
     }
 }
