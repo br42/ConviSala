@@ -1,9 +1,13 @@
 package br.com.wises.convisala.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,6 +36,5 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     }
-
 
 }

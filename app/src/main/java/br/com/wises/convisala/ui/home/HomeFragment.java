@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import br.com.wises.convisala.R;
 
@@ -32,21 +33,20 @@ public class HomeFragment extends Fragment {
         //    }
         //});
 
-
-
-        FloatingActionButton fab = (new FloatingActionButton(getContext())).findViewById(R.id.fab);
+        //FloatingActionButton fab = getView().findViewById(R.id.fab);
+        FloatingActionButton fab = root.findViewById(R.id.fab);
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    //.setAction("Action", null).show();
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
 
                 }
             });
         }
 
-        startActivity(new Intent("br.com.wises.convisala.ui.home.HomeActivity"));
+        //startActivity(new Intent("br.com.wises.convisala.ui.home.HomeActivity"));
 
         return root;
     }
