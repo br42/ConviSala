@@ -16,6 +16,7 @@
         android:text="Suas Reservas: "/>
 
         <ListView
+            android:id="@+id/home_lista_reservas"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="8dp"
@@ -35,6 +36,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_action_add"
-        app:srcCompat="@drawable/ic_action_add" />
+        tools:srcCompat="@drawable/ic_action_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

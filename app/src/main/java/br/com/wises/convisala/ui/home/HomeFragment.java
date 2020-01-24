@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,11 +17,18 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.wises.convisala.R;
+import br.com.wises.convisala.dao.Reserva;
+import br.com.wises.convisala.dao.ReservaDAO;
+import br.com.wises.convisala.dao.Sala;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
+    private final ReservaDAO dao = new ReservaDAO();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +55,46 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
+
+        dao.adicionarReserva(new Reserva ("Frifaire","Claudinei Neto",
+                new Sala(613,42,"","","")
+                ,0,0,0));
+
+        ListView home_listview = root.findViewById(R.id.home_lista_reservas);
+        BaseAdapter adapter = new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return dao.quantiaDeReservas();
+            }
+
+            @Override
+            public Reserva getItem(int posicao) {
+                return dao.obterItem(posicao);
+            }
+
+            @Override
+            public long getItemId(int posicao) {
+                return 0;
+            }
+
+            @Override
+            public View getView(int posicao, View convertView, ViewGroup parent) {
+                Reserva reserva = getItem(posicao);
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_reserva, parent, false);
+                }
+                ((TextView) convertView.findViewById(R.id.item_reserva_solicitador)).setText("por "+reserva.getSolicitador());
+                ((TextView) convertView.findViewById(R.id.item_reserva_tema)).setText(reserva.getTema());
+                ((TextView) convertView.findViewById(R.id.item_reserva_sala)).setText((reserva.getSala().toString()));
+                ((TextView) convertView.findViewById(R.id.item_reserva_andar)).setText(("("+ reserva.getSala().getAndar()+"º Andar)"));
+                ((TextView) convertView.findViewById(R.id.item_reserva_horario_inicio)).setText(("das "+reserva.getHoraInicio()));
+                ((TextView) convertView.findViewById(R.id.item_reserva_horario_fim)).setText(("às "+reserva.getHoraFim()));
+                ((TextView) convertView.findViewById(R.id.item_reserva_data)).setText(("Dia "+reserva.getData()));
+                return convertView;
+            }
+        };
+        home_listview.setAdapter(adapter);
+
 
         //startActivity(new Intent("br.com.wises.convisala.ui.home.HomeActivity"));
 
