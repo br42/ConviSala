@@ -17,4 +17,5 @@
     <string name="login_logar">Logar</string>
     <string name="login_senha">Senha</string>
     <string name="login_usuario">Usuário ou E-mail</string>
+    <string name="login_convidado">Acessar como convidado</string>
 </resources>
