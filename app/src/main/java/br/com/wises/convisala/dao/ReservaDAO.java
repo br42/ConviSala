@@ -13,7 +13,7 @@ public class ReservaDAO {
 
     }
 
-    public ArrayList<Reserva> obterReservas() {
+    public ArrayList<Reserva> obterLista() {
         return reservaLista;
     }
 
@@ -25,8 +25,8 @@ public class ReservaDAO {
         reservaLista.addAll(reservas);
     }
 
-    public Reserva obterItem (int indice) {
-        return reservaLista.get(indice);
+    public Reserva obterReserva (int posicao) {
+        return reservaLista.get(posicao);
     }
 
     public int quantiaDeReservas () {

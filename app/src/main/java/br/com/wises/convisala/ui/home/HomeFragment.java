@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public Reserva getItem(int posicao) {
-                return dao.obterItem(posicao);
+                return dao.obterReserva(posicao);
             }
 
             @Override
