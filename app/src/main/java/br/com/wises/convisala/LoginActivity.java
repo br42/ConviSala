@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-
 import org.json.JSONObject;
 
 import br.com.wises.convisala.dao.Usuario;
@@ -61,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 //if (usuario.validar(referencia)) {
                 if (status.equals("Login efetuado com sucesso!")) {
+                    Aplicativo.logado = true;
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
             }
