@@ -20,9 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 
-import br.com.wises.convisala.ui.login.LoginFragment;
-
-public class MainActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -70,11 +68,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-
-    @Override
-    public void onFragmentInteraction (Uri uri) {
-
     }
 
 }
