@@ -18,4 +18,7 @@
     <string name="login_senha">Senha</string>
     <string name="login_usuario">Usuário ou E-mail</string>
     <string name="login_convidado">Acessar como convidado</string>
+    <string name="signup_cadastrar">Cadastrar</string>
+    <string name="signup_nome">Nome</string>
+    <string name="login_criar_conta">Criar Conta</string>
 </resources>

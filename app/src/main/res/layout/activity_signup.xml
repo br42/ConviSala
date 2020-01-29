@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -33,7 +34,7 @@
             android:layout_marginBottom="16dp">
 
             <ImageView
-                android:id="@+id/login_logo"
+                android:id="@+id/signup_logo"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="0dp"
@@ -46,7 +47,7 @@
                 tools:srcCompat="@mipmap/convisala_logo" />
 
             <TextView
-                android:id="@+id/login_appname"
+                android:id="@+id/signup_cadastro_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -55,24 +56,38 @@
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_logo" />
+                app:layout_constraintTop_toBottomOf="@id/signup_logo" />
 
             <EditText
-                android:id="@+id/login_usuario"
+                android:id="@+id/signup_usuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
                 android:ems="10"
-                android:hint="@string/login_usuario"
+                android:hint="@string/signup_nome"
                 android:inputType="textPersonName"
                 android:singleLine="true"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_logo" />
+                app:layout_constraintTop_toBottomOf="@id/signup_logo" />
 
             <EditText
-                android:id="@+id/login_senha"
+                android:id="@+id/signup_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:ems="10"
+                android:hint="@string/signup_nome"
+                android:inputType="textPersonName"
+                android:singleLine="true"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/signup_usuario" />
+
+            <EditText
+                android:id="@+id/signup_senha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -81,48 +96,26 @@
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:textAlignment="center"
-                app:layout_constraintStart_toStartOf="@id/login_usuario"
-                app:layout_constraintTop_toBottomOf="@id/login_usuario" />
+                app:layout_constraintStart_toStartOf="@id/signup_email"
+                app:layout_constraintTop_toBottomOf="@id/signup_email" />
 
             <Button
-                android:id="@+id/login_logar"
+                android:id="@+id/signup_cadastrar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="@string/login_logar"
+                android:text="@string/signup_cadastrar"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_senha" />
-
-            <Button
-                android:id="@+id/login_cadastrar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/login_criar_conta"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_logar" />
-
-            <Button
-                android:id="@+id/login_convidado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/login_convidado"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_cadastrar" />
+                app:layout_constraintTop_toBottomOf="@id/signup_senha" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_logar"
+                app:layout_constraintTop_toBottomOf="@id/signup_cadastrar"
                 android:layout_marginTop="16dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

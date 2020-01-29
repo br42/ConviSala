@@ -1,24 +1,17 @@
 package br.com.wises.convisala;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.util.Log;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
-import br.com.wises.convisala.MainActivity;
-import br.com.wises.convisala.R;
+import org.json.JSONObject;
+
 import br.com.wises.convisala.dao.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
@@ -58,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 String status = "";
                 try {
-                    status = (new Autenticacao(email.getText().toString(), senha.getText().toString())).execute().get();
+                    status = (new AutenticacaoLogin(email.getText().toString(), senha.getText().toString())).execute().get();
                     //makeAuthRequest("clovis@wises.com.br", "123");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -73,6 +66,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        Button criarConta = findViewById(R.id.login_cadastrar);
+        criarConta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+            }
+        });
+
         Button convidado = findViewById(R.id.login_convidado);
         convidado.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,60 +81,32 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
         });
+
+//        if (false) {
+//            String nome = "abc", senha = "def", email = "ghi";
+//
+//            JSONObject usuarioJson = new JSONObject();
+//
+//            try {
+//                usuarioJson.put("email", email);
+//                usuarioJson.put("senha", senha);
+//                usuarioJson.put("nome", nome);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//            String usuarioBase64 = "";
+//            try {
+//                usuarioBase64 = Base64.encodeToString(usuarioJson.toString().getBytes("UTF-8"), Base64.NO_WRAP);
+//            } catch (Exception e) {e.printStackTrace();}
+//
+//            System.out.println("Objeto JSON em Base64: "+usuarioBase64);
+//
+//            try {
+//                System.out.println("Objeto JSON Decodificado: " + new String(Base64.decode(usuarioBase64,0), "UTF-8"));
+//            } catch (Exception e) {e.printStackTrace();}
+//        }
+
     }
 }
 
-class Autenticacao extends AsyncTask<Void, Void, String> {
-    @NonNull private String email = "";
-    @NonNull private String password = "";
-
-    public Autenticacao (String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    @Override
-    protected String doInBackground(Void... voids) {
-        int responseCode = 0;
-        String wsURL = "http://172.30.248.109:8080/ReservaDeSala/rest/usuario/login";
-        StringBuilder result = new StringBuilder();
-        URL obj = null;
-        try {
-            obj = new URL(wsURL);
-        } catch (Exception e) {
-            return "[EXCEPTION!] URL inválida;";
-        }
-        HttpURLConnection con = null;
-        try {
-            con = (HttpURLConnection) obj.openConnection();
-        } catch (Exception e) {
-            return "[EXCEPTION!] URL inválida, impossível abrir conexão;";
-        }
-        try {
-            con.setRequestMethod("GET");
-            con.setRequestProperty("Content-Type", "*/*");
-            con.setRequestProperty("authorization", "secret");
-            con.setRequestProperty("email", email);
-            con.setRequestProperty("password", password);
-            con.setConnectTimeout(2000);
-            con.connect();
-
-            responseCode = con.getResponseCode();
-            //System.out.println("Responsecode" + ": " + "" + responseCode + "; ");
-
-            BufferedReader rd = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String line = "";
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
-            }
-            rd.close();
-            //System.out.println(result.toString());
-
-            return (result.toString());
-        } catch (Exception e) {
-            //System.out.println("[EXCEPTION!] Responsecode" + ": " + responseCode + "; ");
-            e.printStackTrace();
-            return ("[EXCEPTION!] Responsecode" + ": " + responseCode + "; ");
-        }
-    }
-}
