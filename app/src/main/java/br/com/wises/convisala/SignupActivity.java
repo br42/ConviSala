@@ -2,6 +2,8 @@ package br.com.wises.convisala;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -35,9 +37,11 @@ public class SignupActivity extends AppCompatActivity {
 
                 //Usuario referencia = new Usuario("Clovis", "clovis@wises.com.br", "wisesys");
 
+                String dominio =  email.getText().toString().split("@")[1];
                 String status = "";
                 try {
-                    status = (new AutenticacaoSignup(nome.getText().toString(), email.getText().toString(), senha.getText().toString()))
+                    status = (new AutenticacaoSignup(nome.getText().toString(), email.getText().toString(),
+                            senha.getText().toString(), dominio))
                             .execute().get();
                     //makeAuthRequest("clovis@wises.com.br", "123");
                 } catch (Exception e) {
@@ -54,7 +58,57 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        if (true) {
+        final EditText entradaEmail = findViewById(R.id.signup_email);
+
+        entradaEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String emailDigitado = entradaEmail.getText().toString();
+                    String dominio = "";
+                    String resultado = "";
+
+                    if (emailDigitado.contains("@") && emailDigitado.indexOf(".") > emailDigitado.indexOf("@")) {
+                        if ((emailDigitado.length() > 1) && (emailDigitado.indexOf("@") < (emailDigitado.length() - 1))) {
+                            dominio = emailDigitado.split("@")[1];
+                        }
+                        System.out.println("Domínio Inserido: " + dominio);
+                        try {
+                            resultado = (new AutenticacaoSignup(true, "",
+                                    emailDigitado, "", dominio)).execute().get();
+                        } catch (Exception e) {e.printStackTrace();}
+                        System.out.println(resultado);
+                    }
+                }
+            }
+        });
+
+        /*entradaEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String emailDigitado = entradaEmail.getText().toString();
+                String dominio = "";
+
+                if (emailDigitado.contains("@") && emailDigitado.indexOf(".") > emailDigitado.indexOf("@")) {
+                    if ((emailDigitado.length() > 1) && (emailDigitado.indexOf("@") < (emailDigitado.length() - 1))) {
+                        dominio = emailDigitado.split("@")[1];
+                    }
+                    System.out.println("Domínio Inserido: " + dominio);
+                }
+            }
+        });*/
+
+        if (false) {
             String nome = "abc", senha = "def", email = "ghi";
 
             JSONObject usuarioJson = new JSONObject();

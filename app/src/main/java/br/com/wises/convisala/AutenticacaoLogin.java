@@ -11,10 +11,10 @@ import java.net.URL;
 
 public class AutenticacaoLogin extends AsyncTask<Void, Void, String> {
     @NonNull
-    private static String email = "";
-    @NonNull private static String password = "";
+    private String email = "";
+    @NonNull private String password = "";
 
-    public AutenticacaoLogin(String email, String password) {
+    public AutenticacaoLogin(@NonNull String email, @NonNull String password) {
         this.email = email;
         this.password = password;
     }
