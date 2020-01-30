@@ -2,6 +2,7 @@ package br.com.wises.convisala;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -11,17 +12,23 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.wises.convisala.dao.Usuario;
+import br.com.wises.convisala.model.Organizacao;
 
 public class SignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        try{ jsonArray = new JSONArray(organizacoesString); }catch(Exception e){e.printStackTrace();}
 
         Button login = findViewById(R.id.signup_cadastrar);
         login.setOnClickListener(new View.OnClickListener() {
@@ -37,7 +44,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 //Usuario referencia = new Usuario("Clovis", "clovis@wises.com.br", "wisesys");
 
-                String dominio =  email.getText().toString().split("@")[1];
+                String dominio = email.getText().toString().split("@")[1];
                 String status = "";
                 try {
                     status = (new AutenticacaoSignup(nome.getText().toString(), email.getText().toString(),
@@ -76,12 +83,47 @@ public class SignupActivity extends AppCompatActivity {
                         try {
                             resultado = (new AutenticacaoSignup(true, "",
                                     emailDigitado, "", dominio)).execute().get();
-                        } catch (Exception e) {e.printStackTrace();}
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         System.out.println(resultado);
                     }
+
                 }
             }
         });
+    }
+
+    private String organizacoesString = "";
+    private JSONArray jsonArray = null;
+    private List<Organizacao> listaDeOrganizacoes = new ArrayList();
+
+    public List<Organizacao> parseOrganizacoesArray (String rawOrganizacoes) {
+        List<Organizacao> listaDeOrganizacoes = new ArrayList();
+        if (jsonArray.length() > 0) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj = null;
+                try {obj = jsonArray.getJSONObject(i);}
+                catch (Exception e) {e.printStackTrace();}
+
+                if (obj.has("id") && obj.has("nome") && obj.has("tipoOrganizacao")) {
+                    int id = 0; String nome = ""; char tipoOrganizacao = 0;
+                    try{ id = obj.getInt("id"); }catch(Exception e){e.printStackTrace();}
+                    try{ nome = obj.getString("nome"); }catch(Exception e){e.printStackTrace();}
+                    try{ tipoOrganizacao = obj.getString("tipoOrganizacao").charAt(0); }catch(Exception e){e.printStackTrace();}
+                    Organizacao novaOrganizacao = new Organizacao();
+                    novaOrganizacao.setId(id);
+                    novaOrganizacao.setNome(nome);
+                    novaOrganizacao.setTipoOrganizacao(tipoOrganizacao);
+
+                    listaDeOrganizacoes.add(novaOrganizacao);
+                }
+            }
+        }
+        return listaDeOrganizacoes;
+    }
+
+    private void inutilizado () {
 
         /*entradaEmail.addTextChangedListener(new TextWatcher() {
             @Override
