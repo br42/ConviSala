@@ -1,9 +1,8 @@
 package br.com.wises.convisala.dao;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
+
+import br.com.wises.convisala.model.Reserva;
 
 public class ReservaDAO {
 

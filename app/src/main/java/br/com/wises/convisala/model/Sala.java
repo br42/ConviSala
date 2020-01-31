@@ -1,4 +1,4 @@
-package br.com.wises.convisala.dao;
+package br.com.wises.convisala.model;
 
 import androidx.annotation.NonNull;
 
@@ -39,7 +39,7 @@ public class Sala {
 
     @NonNull @Override
     public String toString() {
-        if (this.getNome() != null && this.getNome() != "") {
+        if (this.getNome() != null && !this.getNome().equals("")) {
             return this.getNome();
         }
 

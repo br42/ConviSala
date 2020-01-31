@@ -4,14 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.json.JSONObject;
-
-import br.com.wises.convisala.dao.Usuario;
+import br.com.wises.convisala.model.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
 

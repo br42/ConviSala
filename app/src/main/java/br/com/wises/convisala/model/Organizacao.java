@@ -5,6 +5,18 @@ public class Organizacao {
     private String nome;
     private char tipoOrganizacao;
 
+    public Organizacao () {
+        this.id = 0;
+        this.nome = "";
+        this.tipoOrganizacao =0;
+    }
+
+    public Organizacao (int id, String nome, char tipoOrganizacao) {
+        this.id = id;
+        this.nome = nome;
+        this.tipoOrganizacao = tipoOrganizacao;
+    }
+
     public int getId() {
         return id;
     }

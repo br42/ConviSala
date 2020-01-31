@@ -1,8 +1,8 @@
 package br.com.wises.convisala.dao;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
+
+import br.com.wises.convisala.model.Usuario;
 
 public class UsuarioDAO {
     private final ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
@@ -20,7 +20,7 @@ public class UsuarioDAO {
     }
 
     public void adicionarLista (ArrayList<Usuario> usuarios) {
-        usuarios.addAll(usuarios);
+        this.usuarios.addAll(usuarios);
     }
 
     public void removerUsuario (Usuario usuario) {

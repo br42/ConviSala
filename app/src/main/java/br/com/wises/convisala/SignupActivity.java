@@ -1,14 +1,20 @@
 package br.com.wises.convisala;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,33 +24,42 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.wises.convisala.dao.Usuario;
+import br.com.wises.convisala.model.Usuario;
 import br.com.wises.convisala.model.Organizacao;
 
 public class SignupActivity extends AppCompatActivity {
+
+    private String organizacoesString = "";
+    private JSONArray jsonArray = null;
+    private List<Organizacao> listaDeOrganizacoes = new ArrayList<Organizacao>();
+    BaseAdapter adapter = null;
+    private int organizacao = 0;
+    private boolean spinnerAberto = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        try{ jsonArray = new JSONArray(organizacoesString); }catch(Exception e){e.printStackTrace();}
-
-        Button login = findViewById(R.id.signup_cadastrar);
-        login.setOnClickListener(new View.OnClickListener() {
+        Button signup = findViewById(R.id.signup_cadastrar);
+        signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText nome = findViewById(R.id.signup_usuario);
                 EditText email = findViewById(R.id.signup_email);
                 EditText senha = findViewById(R.id.signup_senha);
 
+                Spinner spinnerFiliais = findViewById(R.id.signup_spinner);
                 Usuario usuario = new Usuario(nome.getText().toString(),
-                        email.getText().toString(),
-                        senha.getText().toString());
+                            email.getText().toString(),
+                            senha.getText().toString());
 
                 //Usuario referencia = new Usuario("Clovis", "clovis@wises.com.br", "wisesys");
 
-                String dominio = email.getText().toString().split("@")[1];
+                String dominio = "";
+                if (usuario.getEmail().contains("@") && usuario.getEmail().indexOf(".") > usuario.getEmail().indexOf("@")) {
+                    dominio = email.getText().toString().split("@")[1];
+                }
                 String status = "";
                 try {
                     status = (new AutenticacaoSignup(nome.getText().toString(), email.getText().toString(),
@@ -57,12 +72,14 @@ public class SignupActivity extends AppCompatActivity {
 
                 System.out.println(status);
 
-                //if (usuario.validar(referencia)) {
-                if (status.equals("Login efetuado com sucesso!")) {
-                    Aplicativo.logado = true;
-                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
-                }
+                finish();
             }
+
+            //if (usuario.validar(referencia)) {
+            /*if (status.equals("Login efetuado com sucesso!")) {
+                Aplicativo.logado = true;
+                startActivity(new Intent(SignupActivity.this, MainActivity.class));
+            }*/
         });
 
         final EditText entradaEmail = findViewById(R.id.signup_email);
@@ -87,26 +104,108 @@ public class SignupActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         System.out.println(resultado);
+                        parseOrganizacoesArray(resultado);
+
+                        if (organizacao == 0) {
+
+                            findViewById(R.id.signup_container_spinner).setVisibility(View.VISIBLE);
+                            spinnerAberto = true;
+
+                        }
+                    }
+
+                    System.out.println("Tamanho da listaDeOrganizacoes: " + listaDeOrganizacoes.size());
+                    for (int i = 0; i < listaDeOrganizacoes.size(); i++) {
+                        System.out.println("Itens: " + listaDeOrganizacoes.get(i));
                     }
 
                 }
             }
         });
+
+        Spinner signup_spinner = findViewById(R.id.signup_spinner);
+
+        ArrayAdapter a = new ArrayAdapter<Integer>(this, R.layout.activity_signup){};
+
+        adapter = new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return listaDeOrganizacoes.size();
+            }
+
+            @Override
+            public Organizacao getItem(int posicao) {
+                return listaDeOrganizacoes.get(posicao);
+            }
+
+            @Override
+            public long getItemId(int posicao) {
+                return listaDeOrganizacoes.get(posicao).getId();
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public View getView(int posicao, View convertView, ViewGroup parent) {
+                Organizacao organizacao = getItem(posicao);
+                if (organizacao == null || (organizacao.getNome() == "" && organizacao.getId() == 0 && organizacao.getTipoOrganizacao() == 0)) {
+                    if (convertView == null) {
+                        convertView = LayoutInflater.from(SignupActivity.this).inflate(R.layout.item_organizacao, parent, false);
+                        convertView.setVisibility(View.INVISIBLE);
+                    }
+                    return convertView;
+                } else {
+                    if (convertView == null) {
+                        convertView = LayoutInflater.from(SignupActivity.this).inflate(R.layout.item_organizacao, parent, false);
+                    }
+                    ((TextView) convertView.findViewById(R.id.item_organizacao_nome)).setText(organizacao.getNome());
+                    ((TextView) convertView.findViewById(R.id.item_organizacao_tipo))
+                            .setText("(Tipo: " + ((organizacao.getTipoOrganizacao() == 'M') ? "Matriz" :
+                                    ((organizacao.getTipoOrganizacao() == 'F') ? "Filial" : "Desconhecido")) + ")");
+                    return convertView;
+                }
+            }
+        };
+        signup_spinner.setAdapter(adapter);
+
+        ((Spinner)findViewById(R.id.signup_spinner)).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int posicao, long id) {
+                if (spinnerAberto) {
+                    organizacao = listaDeOrganizacoes.get(posicao).getId();
+                    findViewById(R.id.signup_container_spinner).setVisibility(View.GONE);
+                    spinnerAberto = false;
+                }
+                System.out.println("Organização: " + organizacao);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                organizacao = 0;
+                findViewById(R.id.signup_container_spinner).setVisibility(View.GONE);
+                spinnerAberto = false;
+            }
+        });
     }
 
-    private String organizacoesString = "";
-    private JSONArray jsonArray = null;
-    private List<Organizacao> listaDeOrganizacoes = new ArrayList();
-
     public List<Organizacao> parseOrganizacoesArray (String rawOrganizacoes) {
-        List<Organizacao> listaDeOrganizacoes = new ArrayList();
-        if (jsonArray.length() > 0) {
+
+        System.out.println("Interpretando: \""+rawOrganizacoes+"\"; ");
+
+        try{ jsonArray = new JSONArray(rawOrganizacoes); }catch(Exception e){e.printStackTrace();}
+
+        if (listaDeOrganizacoes == null) {
+            listaDeOrganizacoes = new ArrayList<Organizacao>();
+        }
+        listaDeOrganizacoes.clear();
+        listaDeOrganizacoes.add(new Organizacao());
+
+        if (jsonArray != null && jsonArray.length() > 0) {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject obj = null;
                 try {obj = jsonArray.getJSONObject(i);}
                 catch (Exception e) {e.printStackTrace();}
 
-                if (obj.has("id") && obj.has("nome") && obj.has("tipoOrganizacao")) {
+                if (obj != null && obj.has("id") && obj.has("nome") && obj.has("tipoOrganizacao")) {
                     int id = 0; String nome = ""; char tipoOrganizacao = 0;
                     try{ id = obj.getInt("id"); }catch(Exception e){e.printStackTrace();}
                     try{ nome = obj.getString("nome"); }catch(Exception e){e.printStackTrace();}
@@ -116,12 +215,16 @@ public class SignupActivity extends AppCompatActivity {
                     novaOrganizacao.setNome(nome);
                     novaOrganizacao.setTipoOrganizacao(tipoOrganizacao);
 
+                    System.out.println("Interpretado com sucesso! ");
                     listaDeOrganizacoes.add(novaOrganizacao);
+                    adapter.notifyDataSetChanged();
                 }
             }
         }
         return listaDeOrganizacoes;
     }
+
+    //################
 
     private void inutilizado () {
 

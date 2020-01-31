@@ -1,4 +1,4 @@
-package br.com.wises.convisala.dao;
+package br.com.wises.convisala.model;
 
 import androidx.annotation.Nullable;
 

@@ -1,4 +1,6 @@
-package br.com.wises.convisala.dao;
+package br.com.wises.convisala.model;
+
+import br.com.wises.convisala.model.Sala;
 
 public class Reserva {
     private String temaDaReserva = "";

@@ -118,13 +118,13 @@ public class AutenticacaoSignup extends AsyncTask<Void, Void, String> {
 
                 //result.append(new String (Base64.decode(base64.toString(), 0), "UTF-8"));
 
-                JSONArray decoder = new JSONArray(resposta.toString());
-                String nomeOrganizacao = decoder.getJSONObject(0).getString("nome");
+                //JSONArray decoder = new JSONArray(resposta.toString());
+                //String nomeOrganizacao = decoder.getJSONObject(0).getString("nome");
 
-                result.append("Nome da Organização: ");
-                result.append(nomeOrganizacao);
+                //result.append("Nome da Organização: ");
+                //result.append(nomeOrganizacao);
 
-                return (result.toString());
+                return (resposta.toString());
             } catch (Exception e) {
                 //System.out.println("[EXCEPTION!] Responsecode" + ": " + responseCode + "; ");
                 e.printStackTrace();

@@ -1,7 +1,5 @@
 package br.com.wises.convisala.ui.home;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,19 +9,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.com.wises.convisala.R;
-import br.com.wises.convisala.dao.Reserva;
+import br.com.wises.convisala.model.Reserva;
 import br.com.wises.convisala.dao.ReservaDAO;
-import br.com.wises.convisala.dao.Sala;
+import br.com.wises.convisala.model.Sala;
 
 public class HomeFragment extends Fragment {
 
@@ -94,9 +88,6 @@ public class HomeFragment extends Fragment {
             }
         };
         home_listview.setAdapter(adapter);
-
-
-        //startActivity(new Intent("br.com.wises.convisala.ui.home.HomeActivity"));
 
         return root;
     }
