@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -45,25 +44,27 @@ public class SignupActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText nome = findViewById(R.id.signup_usuario);
-                EditText email = findViewById(R.id.signup_email);
-                EditText senha = findViewById(R.id.signup_senha);
+                EditText nomeView = findViewById(R.id.signup_usuario);
+                EditText emailView = findViewById(R.id.signup_email);
+                EditText senhaView = findViewById(R.id.signup_senha);
 
                 Spinner spinnerFiliais = findViewById(R.id.signup_spinner);
-                Usuario usuario = new Usuario(nome.getText().toString(),
-                            email.getText().toString(),
-                            senha.getText().toString());
+                Usuario usuario = new Usuario(nomeView.getText().toString(),
+                            emailView.getText().toString(),
+                            senhaView.getText().toString());
 
                 //Usuario referencia = new Usuario("Clovis", "clovis@wises.com.br", "wisesys");
 
                 String dominio = "";
-                if (usuario.getEmail().contains("@") && usuario.getEmail().indexOf(".") > usuario.getEmail().indexOf("@")) {
-                    dominio = email.getText().toString().split("@")[1];
+                String email = emailView.getText().toString();
+                if (email.contains("@") && email.indexOf(".") > email.indexOf("@")) {
+                    dominio = email.split("@")[1];
                 }
+
                 String status = "";
                 try {
-                    status = (new AutenticacaoSignup(nome.getText().toString(), email.getText().toString(),
-                            senha.getText().toString(), dominio))
+                    status = (new AutenticacaoSignup(nomeView.getText().toString(), email,
+                            senhaView.getText().toString(), dominio))
                             .execute().get();
                     //makeAuthRequest("clovis@wises.com.br", "123");
                 } catch (Exception e) {
