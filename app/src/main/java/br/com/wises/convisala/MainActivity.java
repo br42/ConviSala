@@ -1,8 +1,13 @@
 package br.com.wises.convisala;
 
-import android.net.Uri;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -17,12 +22,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private final Booleano confirmacaoSaida = new Booleano (false);
+    private AlertDialog.Builder dialogoSaida = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +65,26 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        dialogoSaida = new AlertDialog.Builder(this);
+        dialogoSaida.setTitle("Fazer Logout");
+        dialogoSaida.setMessage("Deseja sair?");
+        dialogoSaida.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                confirmacaoSaida.setTrue();
+                Aplicativo.logado = false;
+                finish();
+            }
+        });
+        dialogoSaida.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                confirmacaoSaida.setFalse();
+            }
+        });
+        dialogoSaida.create();
+
     }
 
     @Override
@@ -66,10 +95,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
+    public void onBackPressed() {
+        Aplicativo.logado = false;
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+
+        confirmacaoSaida.setFalse();
+        if (Aplicativo.logado) {
+            dialogoSaida.show();
+        } else {
+            confirmacaoSaida.setTrue();
+            finish();
+        }
+    }
+}
+
+class Booleano {
+    private boolean valor = false;
+
+    public Booleano () {
+        this.valor = false;
+    }
+
+    public Booleano (boolean valor) {
+        this.valor = valor;
+    }
+
+    public void setTrue() {
+        this.valor = true;
+    }
+
+    public void setFalse() {
+        this.valor = false;
+    }
+
+    public void setValor(boolean valor) {
+        this.valor = valor;
+    }
+
+    public boolean getValor() {
+        return valor;
+    }
+
+    public boolean isTrue() {
+        return valor;
+    }
+
+    public boolean isFalse() {
+        return !valor;
     }
 
 }

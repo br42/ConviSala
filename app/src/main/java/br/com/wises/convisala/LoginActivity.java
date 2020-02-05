@@ -50,10 +50,8 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("Prefers", 0); // 0 - for private mode
                 SharedPreferences.Editor editor = pref.edit();
 
-
                 EditText emailView = findViewById(R.id.login_usuario);
                 EditText senhaView = findViewById(R.id.login_senha);
-
 
                 Usuario usuario = new Usuario(emailView.getText().toString(),
                         emailView.getText().toString(),
