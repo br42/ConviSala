@@ -123,7 +123,7 @@
     </ScrollView>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!--androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/signup_container_spinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -145,6 +145,6 @@
             app:layout_constraintTop_toTopOf="parent">
         </Spinner>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

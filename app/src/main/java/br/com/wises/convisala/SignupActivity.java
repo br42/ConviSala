@@ -1,6 +1,7 @@
 package br.com.wises.convisala;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
@@ -34,6 +36,7 @@ public class SignupActivity extends AppCompatActivity {
     BaseAdapter adapter = null;
     private int organizacao = 0;
     private boolean spinnerAberto = false;
+    private AlertDialog.Builder dialogo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,7 @@ public class SignupActivity extends AppCompatActivity {
                 EditText emailView = findViewById(R.id.signup_email);
                 EditText senhaView = findViewById(R.id.signup_senha);
 
-                Spinner spinnerFiliais = findViewById(R.id.signup_spinner);
+                //Spinner spinnerFiliais = findViewById(R.id.signup_spinner);
                 Usuario usuario = new Usuario(nomeView.getText().toString(),
                             emailView.getText().toString(),
                             senhaView.getText().toString());
@@ -109,7 +112,8 @@ public class SignupActivity extends AppCompatActivity {
 
                         if (organizacao == 0) {
 
-                            findViewById(R.id.signup_container_spinner).setVisibility(View.VISIBLE);
+                            //findViewById(R.id.signup_container_spinner).setVisibility(View.VISIBLE);
+                            dialogo.show();
                             spinnerAberto = true;
 
                         }
@@ -124,7 +128,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        Spinner signup_spinner = findViewById(R.id.signup_spinner);
+        //Spinner signup_spinner = findViewById(R.id.signup_spinner);
 
         ArrayAdapter a = new ArrayAdapter<Integer>(this, R.layout.activity_signup){};
 
@@ -151,7 +155,7 @@ public class SignupActivity extends AppCompatActivity {
                 if (organizacao == null || (organizacao.getNome() == "" && organizacao.getId() == 0 && organizacao.getTipoOrganizacao() == 0)) {
                     if (convertView == null) {
                         convertView = LayoutInflater.from(SignupActivity.this).inflate(R.layout.item_organizacao, parent, false);
-                        convertView.setVisibility(View.INVISIBLE);
+                        //convertView.setVisibility(View.INVISIBLE);
                     }
                     return convertView;
                 } else {
@@ -166,26 +170,54 @@ public class SignupActivity extends AppCompatActivity {
                 }
             }
         };
-        signup_spinner.setAdapter(adapter);
 
-        ((Spinner)findViewById(R.id.signup_spinner)).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        dialogo = new AlertDialog.Builder(this);
+        dialogo.setTitle("Selecione a organização");
+        dialogo.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int posicao, long id) {
-                if (spinnerAberto) {
-                    organizacao = listaDeOrganizacoes.get(posicao).getId();
-                    findViewById(R.id.signup_container_spinner).setVisibility(View.GONE);
-                    spinnerAberto = false;
-                }
-                System.out.println("Organização: " + organizacao);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                organizacao = 0;
-                findViewById(R.id.signup_container_spinner).setVisibility(View.GONE);
-                spinnerAberto = false;
+            public void onClick(DialogInterface dialog, int which) {
+                organizacao = which;
             }
         });
+
+
+        /*dialogo.setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                organizacao = which;
+            }
+        });
+        dialogo.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });*/
+
+        dialogo.create();
+
+
+
+        //signup_spinner.setAdapter(adapter);
+
+        //((Spinner)findViewById(R.id.signup_spinner)).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //    @Override
+        //    public void onItemSelected(AdapterView<?> parent, View view, int posicao, long id) {
+        //        if (spinnerAberto) {
+        //            organizacao = listaDeOrganizacoes.get(posicao).getId();
+        //            findViewById(R.id.signup_container_spinner).setVisibility(View.GONE);
+        //            spinnerAberto = false;
+        //        }
+        //        System.out.println("Organização: " + organizacao);
+        //    }
+        //
+        //    @Override
+        //    public void onNothingSelected(AdapterView<?> parent) {
+        //        organizacao = 0;
+        //        findViewById(R.id.signup_container_spinner).setVisibility(View.GONE);
+        //        spinnerAberto = false;
+        //    }
+        //});
     }
 
     public List<Organizacao> parseOrganizacoesArray (String rawOrganizacoes) {
@@ -198,7 +230,7 @@ public class SignupActivity extends AppCompatActivity {
             listaDeOrganizacoes = new ArrayList<Organizacao>();
         }
         listaDeOrganizacoes.clear();
-        listaDeOrganizacoes.add(new Organizacao());
+        //listaDeOrganizacoes.add(new Organizacao());
 
         if (jsonArray != null && jsonArray.length() > 0) {
             for (int i = 0; i < jsonArray.length(); i++) {
