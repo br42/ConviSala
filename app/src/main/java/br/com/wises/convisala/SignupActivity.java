@@ -152,7 +152,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public View getView(int posicao, View convertView, ViewGroup parent) {
                 Organizacao organizacao = getItem(posicao);
-                if (organizacao == null || (organizacao.getNome() == "" && organizacao.getId() == 0 && organizacao.getTipoOrganizacao() == 0)) {
+                if (organizacao == null || (organizacao.getNome().equals("") && organizacao.getId() == 0 && organizacao.getTipoOrganizacao() == 0)) {
                     if (convertView == null) {
                         convertView = LayoutInflater.from(SignupActivity.this).inflate(R.layout.item_organizacao, parent, false);
                         //convertView.setVisibility(View.INVISIBLE);

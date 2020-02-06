@@ -33,23 +33,33 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("Prefers", 0); // 0 - for private mode
         EditText emailView = findViewById(R.id.login_usuario);
+        String emailAnterior = Aplicativo.gerenciadorLogin.obterEmail();
+        String senhaAnterior = Aplicativo.gerenciadorLogin.obterSenha();
+        if (emailAnterior != null && !emailAnterior.equals("") && senhaAnterior != null && !senhaAnterior.equals("")) {
+            String status = "";
+            try {
+                status = (new AutenticacaoLogin(emailAnterior, senhaAnterior)).execute().get();
+                //makeAuthRequest("clovis@wises.com.br", "123");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        if (pref.contains("email")) {
-            System.out.println("Puxando: " + pref.getString("email", "[nullkkkkkk]"));
-            String emailAnterior = pref.getString("email", "");
-            emailView.setText(emailAnterior);
-            System.out.println("Puxado: " + emailAnterior);
+            System.out.println(status);
+
+            //if (usuario.validar(referencia)) {
+            if (status.equals("Login efetuado com sucesso!")) {
+                Aplicativo.gerenciadorLogin.entrar(emailAnterior, senhaAnterior);
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            } else {
+                emailView.setText(emailAnterior);
+            }
         }
 
         Button login = findViewById(R.id.login_logar);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences pref = getApplicationContext().getSharedPreferences("Prefers", 0); // 0 - for private mode
-                SharedPreferences.Editor editor = pref.edit();
-
                 EditText emailView = findViewById(R.id.login_usuario);
                 EditText senhaView = findViewById(R.id.login_senha);
 
@@ -58,12 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                         senhaView.getText().toString());
 
                 String email = emailView.getText().toString();
-
-                if (email != null && !email.equals("")) {
-                    editor.putString("email",email);
-                    editor.commit();
-                    System.out.println("Salvo: " + pref.getString("email", "[nullkkkkkk]"));
-                }
 
                 //Usuario referencia = new Usuario("Clovis", "clovis@wises.com.br", "wisesys");
 
@@ -79,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 //if (usuario.validar(referencia)) {
                 if (status.equals("Login efetuado com sucesso!")) {
-                    Aplicativo.logado = true;
+                    Aplicativo.gerenciadorLogin.entrar(email, senhaView.getText().toString());
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
             }

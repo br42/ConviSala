@@ -30,7 +30,7 @@ import android.view.ViewGroup;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private final Booleano confirmacaoSaida = new Booleano (false);
+    //private final Booleano confirmacaoSaida = new Booleano (false);
     private AlertDialog.Builder dialogoSaida = null;
 
     @Override
@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
+                R.id.nav_salas, R.id.nav_reservas, R.id.nav_perfil,
+                R.id.nav_opcoes, R.id.nav_share, R.id.nav_send)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -69,18 +69,18 @@ public class MainActivity extends AppCompatActivity {
         dialogoSaida = new AlertDialog.Builder(this);
         dialogoSaida.setTitle("Fazer Logout");
         dialogoSaida.setMessage("Deseja sair?");
-        dialogoSaida.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+        dialogoSaida.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                confirmacaoSaida.setTrue();
-                Aplicativo.logado = false;
-                finish();
+                //confirmacaoSaida.setFalse();
             }
         });
-        dialogoSaida.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+        dialogoSaida.setNeutralButton("Sair", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                confirmacaoSaida.setFalse();
+                Aplicativo.gerenciadorLogin.sair();
+                finish();
+                //confirmacaoSaida.setFalse();
             }
         });
         dialogoSaida.create();
@@ -96,20 +96,28 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Aplicativo.logado = false;
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
-        confirmacaoSaida.setFalse();
-        if (Aplicativo.logado) {
+        //confirmacaoSaida.setFalse();
+        if (Aplicativo.gerenciadorLogin.isLogado()) {
             dialogoSaida.show();
         } else {
-            confirmacaoSaida.setTrue();
+            //confirmacaoSaida.setTrue();
             finish();
         }
     }
+
+    // Necessário para o funcionamento do Drawer AppBar:
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+
 }
 
-class Booleano {
+/*class Booleano {
     private boolean valor = false;
 
     public Booleano () {
@@ -144,4 +152,4 @@ class Booleano {
         return !valor;
     }
 
-}
+}*/

@@ -1,4 +1,4 @@
-package br.com.wises.convisala.ui.home;
+package br.com.wises.convisala.ui.reservas;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,16 +19,13 @@ import br.com.wises.convisala.model.Reserva;
 import br.com.wises.convisala.dao.ReservaDAO;
 import br.com.wises.convisala.model.Sala;
 
-public class HomeFragment extends Fragment {
+public class ReservasFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
     private final ReservaDAO dao = new ReservaDAO();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //homeViewModel =
-        //        ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_reservas, container, false);
         //final TextView textView = root.findViewById(R.id.text_home);
         //homeViewModel.getText().observe(this, new Observer<String>() {
         //    @Override
