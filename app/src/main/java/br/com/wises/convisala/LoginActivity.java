@@ -34,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         EditText emailView = findViewById(R.id.login_usuario);
-        String emailAnterior = Aplicativo.gerenciadorLogin.obterEmail();
-        String senhaAnterior = Aplicativo.gerenciadorLogin.obterSenha();
+        String emailAnterior = Aplicativo.gerenciadorLogin.getEmail();
+        String senhaAnterior = Aplicativo.gerenciadorLogin.getSenha();
         if (emailAnterior != null && !emailAnterior.equals("") && senhaAnterior != null && !senhaAnterior.equals("")) {
             String status = "";
             try {
@@ -70,6 +70,11 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emailView.getText().toString();
 
                 //Usuario referencia = new Usuario("Clovis", "clovis@wises.com.br", "wisesys");
+
+                /*String dominio = "";
+                if (email.contains("@") && email.indexOf(".") > email.indexOf("@")) {
+                    dominio = email.split("@")[1];
+                }*/
 
                 String status = "";
                 try {

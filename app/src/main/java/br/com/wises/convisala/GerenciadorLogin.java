@@ -6,6 +6,7 @@ import android.widget.EditText;
 
 public class GerenciadorLogin {
     private boolean logado = false;
+    private int idOrganizacao = 0;
     private SharedPreferences pref = null;
     private SharedPreferences.Editor editor = null;
 
@@ -29,12 +30,20 @@ public class GerenciadorLogin {
         }
     }
 
-    public String obterEmail () {
+    public String getEmail () {
         return pref.getString("email","");
     }
 
-    public String obterSenha () {
+    public String getSenha () {
         return pref.getString("senha","");
+    }
+
+    public int getIdOrganizacao () {
+        return this.idOrganizacao;
+    }
+
+    public void setIdOrganizacao (int id) {
+        this.idOrganizacao = id;
     }
 
     public boolean sair () {
