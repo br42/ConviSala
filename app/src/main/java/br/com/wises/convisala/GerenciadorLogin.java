@@ -131,10 +131,6 @@ public class GerenciadorLogin {
 
         try {
             jsonArray = new JSONArray(rawOrganizacoes);
-
-            if (listaDeOrganizacoes == null) {
-                listaDeOrganizacoes = new ArrayList<>();
-            }
             listaDeOrganizacoes.clear();
             //listaDeOrganizacoes.add(new Organizacao());
 

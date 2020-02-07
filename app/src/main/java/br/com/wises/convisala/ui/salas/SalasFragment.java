@@ -14,15 +14,25 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.wises.convisala.Aplicativo;
+import br.com.wises.convisala.HttpSalas;
 import br.com.wises.convisala.R;
 import br.com.wises.convisala.dao.ReservaDAO;
 import br.com.wises.convisala.dao.SalaDAO;
+import br.com.wises.convisala.model.Organizacao;
 import br.com.wises.convisala.model.Reserva;
 import br.com.wises.convisala.model.Sala;
 
 public class SalasFragment extends Fragment {
 
     private final SalaDAO dao = new SalaDAO();
+    Sala sala = new Sala();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,20 +57,18 @@ public class SalasFragment extends Fragment {
             });
         }
 
-        dao.adicionarReserva(new Reserva("Frifaire","Claudinei Neto",
-                new Sala(613,42,"","","")
-                ,0,0,0));
+        //dao.adicionarSala(new Sala(613,42,"","",""));
 
         ListView home_listview = root.findViewById(R.id.salas_lista_salas);
         BaseAdapter adapter = new BaseAdapter() {
             @Override
             public int getCount() {
-                return dao.quantiaDeReservas();
+                return dao.quantiaDeSalas();
             }
 
             @Override
-            public Reserva getItem(int posicao) {
-                return dao.obterReserva(posicao);
+            public Sala getItem(int posicao) {
+                return dao.obterSala(posicao);
             }
 
             @Override
@@ -70,21 +78,62 @@ public class SalasFragment extends Fragment {
 
             @Override
             public View getView(int posicao, View convertView, ViewGroup parent) {
-                Reserva reserva = getItem(posicao);
+                Sala sala = getItem(posicao);
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_sala, parent, false);
                 }
-                /*((TextView) convertView.findViewById(R.id.item_sala_nome)).setText("por "+reserva.getSolicitador());
-                ((TextView) convertView.findViewById(R.id.item_reserva_tema)).setText(reserva.getTema());
-                ((TextView) convertView.findViewById(R.id.item_reserva_sala)).setText((reserva.getSala().toString()));
-                ((TextView) convertView.findViewById(R.id.item_reserva_andar)).setText(("("+ reserva.getSala().getAndar()+"º Andar)"));
-                ((TextView) convertView.findViewById(R.id.item_reserva_horario_inicio)).setText(("das "+reserva.getHoraInicio()));
-                ((TextView) convertView.findViewById(R.id.item_reserva_horario_fim)).setText(("às "+reserva.getHoraFim()));
-                ((TextView) convertView.findViewById(R.id.item_reserva_data)).setText(("Dia "+reserva.getData()));*/
+                try {
+                    ((TextView) convertView.findViewById(R.id.item_sala_nome)).setText(sala.getNome());
+                    ((TextView) convertView.findViewById(R.id.item_sala_local)).setText(sala.getLocalizacao());
+                    ((TextView) convertView.findViewById(R.id.item_sala_andar))
+                            .setText((sala.getOrganizacao() != null) ? (sala.getOrganizacao().getNome()) : (""));
+                    ((TextView) convertView.findViewById(R.id.item_sala_bairro)).setText(("" + sala.getQuantidadePessoasSentadas() + " cadeiras"));
+                    ((TextView) convertView.findViewById(R.id.item_sala_cidade)).setText("(" + sala.getArea() + "m²)");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 return convertView;
             }
         };
         home_listview.setAdapter(adapter);
+
+        List<Sala> salas = new ArrayList<>();
+        try {
+            String jsonSalas = new HttpSalas().execute().get();
+            System.out.println("Interpretando Salas: " + jsonSalas + "; ");
+            JSONArray listaJson = new JSONArray(jsonSalas);
+            JSONObject obj;
+            for (int i = 0; i < listaJson.length(); i++) {
+                obj = listaJson.getJSONObject(i);
+                sala = new Sala();
+
+                sala.setNome(obj.optString("nome",""));
+                sala.setLocalizacao(obj.optString("localizacao",""));
+                sala.setId(obj.optInt("id",0));
+                sala.setMultimidia(obj.optBoolean("possuiMultimidia",false));
+                sala.setArCondicionado(obj.optBoolean("possuiArcon",false));
+                sala.setQuantidadePessoasSentadas(obj.optInt("quantidadePessoasSentadas",0));
+                sala.setArea(obj.optDouble("areaDaSala",0));
+                sala.setLatitude(obj.optDouble("latitude",0));
+                sala.setLongitude(obj.optDouble("longitude",0));
+
+                JSONObject organizacao = obj.optJSONObject("idOrganizacao");
+                if (organizacao != null && organizacao.length() > 0) {
+                    sala.setOrganizacao(new Organizacao(
+                            organizacao.optInt("id",0),
+                            organizacao.optString("nome",""),
+                            organizacao.optString("tipoOrganizacao","\0").charAt(0)));
+                }
+
+                salas.add(sala);
+                System.out.println("Salas: Sala Nº" + (i+1) + " interpretada com sucesso! " +
+                        sala.getNome() + " em " + sala.getLocalizacao() + "; ");
+            }
+            adapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        dao.adicionarLista(salas);
 
         return root;
     }

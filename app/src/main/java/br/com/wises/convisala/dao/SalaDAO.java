@@ -1,35 +1,37 @@
 package br.com.wises.convisala.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.wises.convisala.model.Reserva;
+import br.com.wises.convisala.model.Sala;
 
 public class SalaDAO {
 
-    private final ArrayList<Reserva> reservaLista =  new ArrayList<Reserva>();
+    private final ArrayList<Sala> salaLista =  new ArrayList<>();
 
     public SalaDAO() {
 
     }
 
-    public ArrayList<Reserva> obterLista() {
-        return reservaLista;
+    public ArrayList<Sala> obterLista() {
+        return salaLista;
     }
 
-    public void adicionarReserva (Reserva reserva) {
-        reservaLista.add(reserva);
+    public void adicionarSala (Sala sala) {
+        salaLista.add(sala);
     }
 
-    public void adicionarLista (ArrayList<Reserva> reservas) {
-        reservaLista.addAll(reservas);
+    public void adicionarLista (List<Sala> salas) {
+        salaLista.addAll(salas);
     }
 
-    public Reserva obterReserva (int posicao) {
-        return reservaLista.get(posicao);
+    public Sala obterSala (int posicao) {
+        return salaLista.get(posicao);
     }
 
-    public int quantiaDeReservas () {
-        return reservaLista.size();
+    public int quantiaDeSalas () {
+        return salaLista.size();
     }
 
 }

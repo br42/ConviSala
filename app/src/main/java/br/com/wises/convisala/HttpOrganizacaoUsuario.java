@@ -24,7 +24,7 @@ public class HttpOrganizacaoUsuario extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         int responseCode = 0;
-        String wsURL = "http://172.30.248.109:8080/ReservaDeSala/rest/organizacao/usuario/loginV2/";
+        String wsURL = "http://172.30.248.109:8080/ReservaDeSala/rest/usuario/loginV2/";
         StringBuilder resposta = new StringBuilder();
         URL obj = null;
         try {
