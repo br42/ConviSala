@@ -6,7 +6,7 @@ import br.com.wises.convisala.model.Reserva;
 
 public class ReservaDAO {
 
-    private final ArrayList<Reserva> reservaLista =  new ArrayList<Reserva>();
+    private final ArrayList<Reserva> reservaLista =  new ArrayList<>();
 
     public ReservaDAO () {
 

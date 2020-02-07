@@ -2,18 +2,15 @@ package br.com.wises.convisala;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -32,7 +29,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private String organizacoesString = "";
     private JSONArray jsonArray = null;
-    private List<Organizacao> listaDeOrganizacoes = new ArrayList<Organizacao>();
+    private List<Organizacao> listaDeOrganizacoes = new ArrayList<>();
     BaseAdapter adapter = null;
     private int organizacao = 0;
     private boolean spinnerAberto = false;
@@ -102,13 +99,13 @@ public class SignupActivity extends AppCompatActivity {
                         }
                         System.out.println("Domínio Inserido: " + dominio);
                         try {
-                            resultado = (new AutenticacaoSignup(true, "",
-                                    emailDigitado, "", dominio)).execute().get();
+                            resultado = (new HttpListaOrganizacoes(dominio)).execute().get();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         System.out.println(resultado);
-                        parseOrganizacoesArray(resultado);
+                        listaDeOrganizacoes = Aplicativo.gerenciadorLogin.parseOrganizacoesArray(resultado);
+                        adapter.notifyDataSetChanged();
 
                         if (organizacao == 0) {
 
@@ -218,43 +215,6 @@ public class SignupActivity extends AppCompatActivity {
         //        spinnerAberto = false;
         //    }
         //});
-    }
-
-    public List<Organizacao> parseOrganizacoesArray (String rawOrganizacoes) {
-
-        System.out.println("Interpretando: \""+rawOrganizacoes+"\"; ");
-
-        try{ jsonArray = new JSONArray(rawOrganizacoes); }catch(Exception e){e.printStackTrace();}
-
-        if (listaDeOrganizacoes == null) {
-            listaDeOrganizacoes = new ArrayList<Organizacao>();
-        }
-        listaDeOrganizacoes.clear();
-        //listaDeOrganizacoes.add(new Organizacao());
-
-        if (jsonArray != null && jsonArray.length() > 0) {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject obj = null;
-                try {obj = jsonArray.getJSONObject(i);}
-                catch (Exception e) {e.printStackTrace();}
-
-                if (obj != null && obj.has("id") && obj.has("nome") && obj.has("tipoOrganizacao")) {
-                    int id = 0; String nome = ""; char tipoOrganizacao = 0;
-                    try{ id = obj.getInt("id"); }catch(Exception e){e.printStackTrace();}
-                    try{ nome = obj.getString("nome"); }catch(Exception e){e.printStackTrace();}
-                    try{ tipoOrganizacao = obj.getString("tipoOrganizacao").charAt(0); }catch(Exception e){e.printStackTrace();}
-                    Organizacao novaOrganizacao = new Organizacao();
-                    novaOrganizacao.setId(id);
-                    novaOrganizacao.setNome(nome);
-                    novaOrganizacao.setTipoOrganizacao(tipoOrganizacao);
-
-                    System.out.println("Interpretado com sucesso! ");
-                    listaDeOrganizacoes.add(novaOrganizacao);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        }
-        return listaDeOrganizacoes;
     }
 
     //################

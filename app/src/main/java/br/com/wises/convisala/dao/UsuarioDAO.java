@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import br.com.wises.convisala.model.Usuario;
 
 public class UsuarioDAO {
-    private final ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+    private final ArrayList<Usuario> usuarios = new ArrayList<>();
 
     public UsuarioDAO () {
 

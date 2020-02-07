@@ -27,13 +27,13 @@ public class AutenticacaoSignup extends AsyncTask<Void, Void, String> {
         this.dominio = dominio;
     }
 
-    public AutenticacaoSignup(boolean checarOrganizacao, @NonNull String nome, @NonNull String email, @NonNull String password, @NonNull String dominio) {
+    /*public AutenticacaoSignup(boolean checarOrganizacao, @NonNull String nome, @NonNull String email, @NonNull String password, @NonNull String dominio) {
         this.nome = nome;
         this.email = email;
         this.password = password;
         this.dominio = dominio;
         this.checarOrganizacao = checarOrganizacao;
-    }
+    }*/
 
     @Override
     protected String doInBackground(Void... voids) {

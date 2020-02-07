@@ -1,14 +1,18 @@
 package br.com.wises.convisala.model;
 
+import java.util.Calendar;
+
 public class Organizacao {
-    private int id;
-    private String nome;
-    private char tipoOrganizacao;
+    private int id = 0;
+    private String nome = "";
+    private char tipoOrganizacao = 0;
+    private String dominio = "";
+    private long dataCriacao = 0;
+    private long dataAlteracao = 0;
+
 
     public Organizacao () {
-        this.id = 0;
-        this.nome = "";
-        this.tipoOrganizacao =0;
+        this(0, "", (char)0);
     }
 
     public Organizacao (int id, String nome, char tipoOrganizacao) {

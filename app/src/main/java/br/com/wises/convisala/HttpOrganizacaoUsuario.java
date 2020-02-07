@@ -12,18 +12,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpSalas extends AsyncTask<Void, Void, String> {
+public class HttpOrganizacaoUsuario extends AsyncTask<Void, Void, String> {
+    @NonNull private String email = "";
+    @NonNull private String password = "";
 
-    public HttpSalas() {
-
+    public HttpOrganizacaoUsuario(@NonNull String email, @NonNull String password) {
+        this.email = email;
+        this.password = password;
     }
 
     @Override
     protected String doInBackground(Void... voids) {
         int responseCode = 0;
-        String wsURL = "http://172.30.248.109:8080/ReservaDeSala/rest/sala/salas";
+        String wsURL = "http://172.30.248.109:8080/ReservaDeSala/rest/organizacao/usuario/loginV2/";
         StringBuilder resposta = new StringBuilder();
-        StringBuilder result = new StringBuilder();
         URL obj = null;
         try {
             obj = new URL(wsURL);
@@ -37,11 +39,11 @@ public class HttpSalas extends AsyncTask<Void, Void, String> {
             return "[EXCEPTION!] URL inválida, impossível abrir conexão;";
         }
         try {
-
             con.setRequestMethod("GET");
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("authorization", "secret");
-            con.setRequestProperty("id_organizacao", "" + Aplicativo.gerenciadorLogin.getOrganizacao().getId());
+            con.setRequestProperty("email", email);
+            con.setRequestProperty("password", password);
             con.setConnectTimeout(2000);
             con.connect();
 
@@ -54,15 +56,6 @@ public class HttpSalas extends AsyncTask<Void, Void, String> {
                 resposta.append(line);
             }
             rd.close();
-            //System.out.println(result.toString());
-
-            //result.append(new String (Base64.decode(base64.toString(), 0), "UTF-8"));
-
-            //JSONArray decoder = new JSONArray(resposta.toString());
-            //String nomeOrganizacao = decoder.getJSONObject(0).getString("nome");
-
-            //result.append("Nome da Organização: ");
-            //result.append(nomeOrganizacao);
 
             return (resposta.toString());
         } catch (Exception e) {
