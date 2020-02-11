@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -51,6 +52,14 @@ public class ReservasFragment extends Fragment {
                 ,0,0,0));
 
         ListView home_listview = root.findViewById(R.id.home_lista_reservas);
+
+        home_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
         BaseAdapter adapter = new BaseAdapter() {
             @Override
             public int getCount() {

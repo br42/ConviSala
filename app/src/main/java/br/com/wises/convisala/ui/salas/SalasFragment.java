@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -57,9 +58,16 @@ public class SalasFragment extends Fragment {
             });
         }
 
-        //dao.adicionarSala(new Sala(613,42,"","",""));
-
         ListView home_listview = root.findViewById(R.id.salas_lista_salas);
+
+        home_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+        //dao.adicionarSala(new Sala(613,42,"","",""));
         BaseAdapter adapter = new BaseAdapter() {
             @Override
             public int getCount() {
