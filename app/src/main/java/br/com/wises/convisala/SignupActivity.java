@@ -55,25 +55,58 @@ public class SignupActivity extends AppCompatActivity {
 
                 //Usuario referencia = new Usuario("Clovis", "clovis@wises.com.br", "wisesys");
 
+                String emailDigitado = emailView.getText().toString();
                 String dominio = "";
-                String email = emailView.getText().toString();
-                if (email.contains("@") && email.indexOf(".") > email.indexOf("@")) {
-                    dominio = email.split("@")[1];
+                String resultado = "";
+
+                if (emailDigitado.contains("@") && emailDigitado.indexOf(".") > emailDigitado.indexOf("@")) {
+                    if ((emailDigitado.length() > 1) && (emailDigitado.indexOf("@") < (emailDigitado.length() - 1))) {
+                        dominio = emailDigitado.split("@")[1];
+                    }
+                    System.out.println("Domínio Inserido: " + dominio);
+
+                    if (organizacao == 0) {
+                        try {
+                            resultado = (new HttpListaOrganizacoes(dominio)).execute().get();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println(resultado);
+                        listaDeOrganizacoes = Aplicativo.gerenciadorLogin.parseOrganizacoesArray(resultado);
+                        adapter.notifyDataSetChanged();
+
+                        //findViewById(R.id.signup_container_spinner).setVisibility(View.VISIBLE);
+                        dialogo.show();
+                        spinnerAberto = true;
+
+                    } else {
+                        System.out.println("Tamanho da listaDeOrganizacoes: " + listaDeOrganizacoes.size());
+                        for (int i = 0; i < listaDeOrganizacoes.size(); i++) {
+                            System.out.println("Itens: " + listaDeOrganizacoes.get(i));
+                        }
+
+
+                        /*String dominio = "";
+                        String email = emailView.getText().toString();
+                        if (email.contains("@") && email.indexOf(".") > email.indexOf("@")) {
+                            dominio = email.split("@")[1];
+                        }*/
+
+                        String status = "";
+                        try {
+                            status = (new AutenticacaoSignup(nomeView.getText().toString(), emailView.getText().toString(),
+                                    senhaView.getText().toString(), dominio))
+                                    .execute().get();
+                            //makeAuthRequest("clovis@wises.com.br", "123");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        System.out.println(status);
+
+                        finish();
+                    }
                 }
-
-                String status = "";
-                try {
-                    status = (new AutenticacaoSignup(nomeView.getText().toString(), email,
-                            senhaView.getText().toString(), dominio))
-                            .execute().get();
-                    //makeAuthRequest("clovis@wises.com.br", "123");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                System.out.println(status);
-
-                finish();
             }
 
             //if (usuario.validar(referencia)) {
@@ -83,7 +116,7 @@ public class SignupActivity extends AppCompatActivity {
             }*/
         });
 
-        final EditText entradaEmail = findViewById(R.id.signup_email);
+        /*final EditText entradaEmail = findViewById(R.id.signup_email);
 
         entradaEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -123,7 +156,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 }
             }
-        });
+        });*/
 
         //Spinner signup_spinner = findViewById(R.id.signup_spinner);
 
@@ -173,7 +206,9 @@ public class SignupActivity extends AppCompatActivity {
         dialogo.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                organizacao = which;
+                try {
+                    organizacao = listaDeOrganizacoes.get(which).getId();
+                } catch (Exception e) {e.printStackTrace();}
             }
         });
 
