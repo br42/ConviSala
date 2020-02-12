@@ -1,5 +1,6 @@
 package br.com.wises.convisala.ui.salas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import br.com.wises.convisala.Aplicativo;
 import br.com.wises.convisala.HttpSalas;
+import br.com.wises.convisala.InfoSalaActivity;
 import br.com.wises.convisala.R;
 import br.com.wises.convisala.dao.ReservaDAO;
 import br.com.wises.convisala.dao.SalaDAO;
@@ -33,7 +35,7 @@ import br.com.wises.convisala.model.Sala;
 public class SalasFragment extends Fragment {
 
     private final SalaDAO dao = new SalaDAO();
-    Sala sala = new Sala();
+    private static Sala salaEscolhida = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +65,8 @@ public class SalasFragment extends Fragment {
         home_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                setSalaEscolhida(dao.obterSala(position));
+                startActivity(new Intent(getContext(), InfoSalaActivity.class));
             }
         });
 
@@ -113,7 +116,7 @@ public class SalasFragment extends Fragment {
             JSONObject obj;
             for (int i = 0; i < listaJson.length(); i++) {
                 obj = listaJson.getJSONObject(i);
-                sala = new Sala();
+                Sala sala = new Sala();
 
                 sala.setNome(obj.optString("nome",""));
                 sala.setLocalizacao(obj.optString("localizacao",""));
@@ -144,6 +147,14 @@ public class SalasFragment extends Fragment {
         dao.adicionarLista(salas);
 
         return root;
+    }
+
+    private void setSalaEscolhida(Sala sala) {
+        SalasFragment.salaEscolhida = sala;
+    }
+
+    public static Sala getSalaEscolhida() {
+        return salaEscolhida;
     }
 
 }
