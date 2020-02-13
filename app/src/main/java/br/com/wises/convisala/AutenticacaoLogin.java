@@ -11,8 +11,8 @@ import java.net.URL;
 
 public class AutenticacaoLogin extends AsyncTask<Void, Void, String> {
     @NonNull
-    private String email = "";
-    @NonNull private String password = "";
+    private String email;
+    @NonNull private String password;
 
     public AutenticacaoLogin(@NonNull String email, @NonNull String password) {
         this.email = email;
@@ -24,13 +24,13 @@ public class AutenticacaoLogin extends AsyncTask<Void, Void, String> {
         int responseCode = 0;
         String wsURL = "http://172.30.248.109:8080/ReservaDeSala/rest/usuario/login";
         StringBuilder result = new StringBuilder();
-        URL obj = null;
+        URL obj;
         try {
             obj = new URL(wsURL);
         } catch (Exception e) {
             return "[EXCEPTION!] URL inválida;";
         }
-        HttpURLConnection con = null;
+        HttpURLConnection con;
         try {
             con = (HttpURLConnection) obj.openConnection();
         } catch (Exception e) {
@@ -49,7 +49,7 @@ public class AutenticacaoLogin extends AsyncTask<Void, Void, String> {
             //System.out.println("Responsecode" + ": " + "" + responseCode + "; ");
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String line = "";
+            String line;
             while ((line = rd.readLine()) != null) {
                 result.append(line);
             }

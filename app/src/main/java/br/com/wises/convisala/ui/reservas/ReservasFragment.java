@@ -82,7 +82,7 @@ public class ReservasFragment extends Fragment {
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_reserva, parent, false);
                 }
-                ((TextView) convertView.findViewById(R.id.item_reserva_solicitador)).setText("por "+reserva.getSolicitador());
+                ((TextView) convertView.findViewById(R.id.item_reserva_solicitador)).setText(String.format(getString(R.string.fragment_reservas_solicitador), reserva.getSolicitador()));
                 ((TextView) convertView.findViewById(R.id.item_reserva_tema)).setText(reserva.getTema());
                 ((TextView) convertView.findViewById(R.id.item_reserva_sala)).setText((reserva.getSala().toString()));
                 ((TextView) convertView.findViewById(R.id.item_reserva_andar)).setText(("("+ reserva.getSala().getAndar()+"º Andar)"));

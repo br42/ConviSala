@@ -3,11 +3,9 @@ package br.com.wises.convisala;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,23 +14,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import br.com.wises.convisala.model.Usuario;
 import br.com.wises.convisala.model.Organizacao;
+import br.com.wises.convisala.service.HttpListaOrganizacoes;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private String organizacoesString = "";
-    private JSONArray jsonArray = null;
     private List<Organizacao> listaDeOrganizacoes = new ArrayList<>();
     BaseAdapter adapter = null;
     private int organizacao = 0;
-    private boolean spinnerAberto = false;
     private AlertDialog.Builder dialogo = null;
 
     @Override
@@ -49,10 +40,6 @@ public class SignupActivity extends AppCompatActivity {
                 EditText senhaView = findViewById(R.id.signup_senha);
 
                 //Spinner spinnerFiliais = findViewById(R.id.signup_spinner);
-                Usuario usuario = new Usuario(nomeView.getText().toString(),
-                            emailView.getText().toString(),
-                            senhaView.getText().toString());
-
                 //Usuario referencia = new Usuario("Clovis", "clovis@wises.com.br", "wisesys");
 
                 String emailDigitado = emailView.getText().toString();
@@ -77,7 +64,6 @@ public class SignupActivity extends AppCompatActivity {
 
                         //findViewById(R.id.signup_container_spinner).setVisibility(View.VISIBLE);
                         dialogo.show();
-                        spinnerAberto = true;
 
                     } else {
                         System.out.println("Tamanho da listaDeOrganizacoes: " + listaDeOrganizacoes.size());
@@ -160,8 +146,6 @@ public class SignupActivity extends AppCompatActivity {
 
         //Spinner signup_spinner = findViewById(R.id.signup_spinner);
 
-        ArrayAdapter a = new ArrayAdapter<Integer>(this, R.layout.activity_signup){};
-
         adapter = new BaseAdapter() {
             @Override
             public int getCount() {
@@ -228,7 +212,8 @@ public class SignupActivity extends AppCompatActivity {
 
         dialogo.create();
 
-
+    }
+}
 
         //signup_spinner.setAdapter(adapter);
 
@@ -250,13 +235,12 @@ public class SignupActivity extends AppCompatActivity {
         //        spinnerAberto = false;
         //    }
         //});
-    }
 
     //################
 
-    private void inutilizado () {
+    /*private void inutilizado () {
 
-        /*entradaEmail.addTextChangedListener(new TextWatcher() {
+        entradaEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -279,7 +263,7 @@ public class SignupActivity extends AppCompatActivity {
                     System.out.println("Domínio Inserido: " + dominio);
                 }
             }
-        });*/
+        });
 
         if (false) {
             String nome = "abc", senha = "def", email = "ghi";
@@ -305,5 +289,4 @@ public class SignupActivity extends AppCompatActivity {
                 System.out.println("Objeto JSON Decodificado: " + new String(Base64.decode(usuarioBase64,0), "UTF-8"));
             } catch (Exception e) {e.printStackTrace();}
         }
-    }
-}
+    }*/

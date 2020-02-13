@@ -3,13 +3,10 @@ package br.com.wises.convisala;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import br.com.wises.convisala.model.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -48,8 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             System.out.println(status);
 
             //if (usuario.validar(referencia)) {
-            if (status.equals("Login efetuado com sucesso!")) {
-                Aplicativo.gerenciadorLogin.entrar(emailAnterior, senhaAnterior);
+            if (status.equals("Login efetuado com sucesso!") && Aplicativo.gerenciadorLogin.entrar(emailAnterior, senhaAnterior)) {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             } else {
                 emailView.setText(emailAnterior);
@@ -62,10 +58,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EditText emailView = findViewById(R.id.login_usuario);
                 EditText senhaView = findViewById(R.id.login_senha);
-
-                Usuario usuario = new Usuario(emailView.getText().toString(),
-                        emailView.getText().toString(),
-                        senhaView.getText().toString());
 
                 String email = emailView.getText().toString();
 
@@ -87,8 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 System.out.println(status);
 
                 //if (usuario.validar(referencia)) {
-                if (status.equals("Login efetuado com sucesso!")) {
-                    Aplicativo.gerenciadorLogin.entrar(email, senhaView.getText().toString());
+                if (status.equals("Login efetuado com sucesso!") && Aplicativo.gerenciadorLogin.entrar(email, senhaView.getText().toString())) {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
             }

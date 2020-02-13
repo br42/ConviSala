@@ -3,7 +3,6 @@ package br.com.wises.convisala.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.wises.convisala.model.Reserva;
 import br.com.wises.convisala.model.Sala;
 
 public class SalaDAO {

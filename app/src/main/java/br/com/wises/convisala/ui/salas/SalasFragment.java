@@ -22,14 +22,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.wises.convisala.Aplicativo;
-import br.com.wises.convisala.HttpSalas;
+import br.com.wises.convisala.service.HttpSalas;
 import br.com.wises.convisala.InfoSalaActivity;
 import br.com.wises.convisala.R;
-import br.com.wises.convisala.dao.ReservaDAO;
 import br.com.wises.convisala.dao.SalaDAO;
 import br.com.wises.convisala.model.Organizacao;
-import br.com.wises.convisala.model.Reserva;
 import br.com.wises.convisala.model.Sala;
 
 public class SalasFragment extends Fragment {

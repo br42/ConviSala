@@ -1,36 +1,31 @@
-package br.com.wises.convisala;
+package br.com.wises.convisala.service;
 
 import android.os.AsyncTask;
-import android.util.Base64;
-
 import androidx.annotation.NonNull;
-
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpSalas extends AsyncTask<Void, Void, String> {
+public class HttpListaOrganizacoes extends AsyncTask<Void, Void, String> {
+    @NonNull private String dominio;
 
-    public HttpSalas() {
-
+    public HttpListaOrganizacoes(@NonNull String dominio) {
+        this.dominio = dominio;
     }
 
     @Override
     protected String doInBackground(Void... voids) {
         int responseCode = 0;
-        String wsURL = "http://172.30.248.109:8080/ReservaDeSala/rest/sala/salas";
+        String wsURL = "http://172.30.248.109:8080/ReservaDeSala/rest/organizacao/organizacoesByDominio/";
         StringBuilder resposta = new StringBuilder();
-        StringBuilder result = new StringBuilder();
-        URL obj = null;
+        URL obj;
         try {
             obj = new URL(wsURL);
         } catch (Exception e) {
             return "[EXCEPTION!] URL inválida;";
         }
-        HttpURLConnection con = null;
+        HttpURLConnection con;
         try {
             con = (HttpURLConnection) obj.openConnection();
         } catch (Exception e) {
@@ -41,7 +36,7 @@ public class HttpSalas extends AsyncTask<Void, Void, String> {
             con.setRequestMethod("GET");
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("authorization", "secret");
-            con.setRequestProperty("id_organizacao", "" + Aplicativo.gerenciadorLogin.getOrganizacao().getId());
+            con.setRequestProperty("dominio", dominio);
             con.setConnectTimeout(2000);
             con.connect();
 
@@ -49,7 +44,7 @@ public class HttpSalas extends AsyncTask<Void, Void, String> {
             //System.out.println("Responsecode" + ": " + "" + responseCode + "; ");
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String line = "";
+            String line;
             while ((line = rd.readLine()) != null) {
                 resposta.append(line);
             }

@@ -1,4 +1,4 @@
-package br.com.wises.convisala;
+package br.com.wises.convisala.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.wises.convisala.model.Organizacao;
+import br.com.wises.convisala.service.HttpOrganizacaoUsuario;
 
 public class GerenciadorLogin {
-    private boolean logado = false;
+    private boolean logado;
     private Organizacao organizacao = new Organizacao();
-    private SharedPreferences pref = null;
+    private SharedPreferences pref;
     private SharedPreferences.Editor editor = null;
 
     public GerenciadorLogin (Context context) {
@@ -31,12 +32,13 @@ public class GerenciadorLogin {
             editor.putString("senha", senha);
             editor.apply();
             logado = true;
-            String json = "";
+            String json;
             try {
                 json = new HttpOrganizacaoUsuario(email, senha).execute().get();
                 organizacao = parseOrganizacoesUsuario(json);
             } catch (Exception e) {
                 e.printStackTrace();
+                return false;
             }
             return true;
         } else {
@@ -98,8 +100,8 @@ public class GerenciadorLogin {
     }
 
     public Organizacao parseOrganizacoesUsuario (String rawUsuario) {
-        System.out.println("Interpretando: \""+rawUsuario+"\"; ");;
-        JSONObject jsonObject = null;
+        System.out.println("Interpretando: \""+rawUsuario+"\"; ");
+        JSONObject jsonObject;
         Organizacao org = new Organizacao();
 
         try {
@@ -108,7 +110,7 @@ public class GerenciadorLogin {
             if (jsonObject.length() > 0) {
                 JSONObject obj = jsonObject.optJSONObject("idOrganizacao");
                 if (obj != null && obj.length() > 0) {
-                    int id = 0; String nome = ""; char tipoOrganizacao = 0;
+                    int id; String nome; char tipoOrganizacao;
                     id = obj.optInt("id", 0);
                     nome = obj.optString("nome", "");
                     tipoOrganizacao = obj.optString("tipoOrganizacao", "\0").charAt(0);
@@ -126,7 +128,7 @@ public class GerenciadorLogin {
 
     public List<Organizacao> parseOrganizacoesArray (String rawOrganizacoes) {
         System.out.println("Interpretando: \""+rawOrganizacoes+"\"; ");
-        JSONArray jsonArray = null;
+        JSONArray jsonArray;
         List<Organizacao> listaDeOrganizacoes = new ArrayList<>();
 
         try {
@@ -141,7 +143,7 @@ public class GerenciadorLogin {
                     catch (Exception e) {e.printStackTrace();}
 
                     if (obj != null && obj.has("id") && obj.has("nome") && obj.has("tipoOrganizacao")) {
-                        int id = 0; String nome = ""; char tipoOrganizacao = 0;
+                        int id; String nome; char tipoOrganizacao;
                         id = obj.optInt("id", 0);
                         nome = obj.optString("nome", "");
                         tipoOrganizacao = obj.optString("tipoOrganizacao", "\0").charAt(0);

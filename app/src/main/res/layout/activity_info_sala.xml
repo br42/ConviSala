@@ -69,7 +69,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textSize="20sp"
                 android:textStyle="normal"
-                android:text="Nome: "/>
+                tools:text="Nome: "/>
 
             <TextView
                 android:id="@+id/activity_info_sala_localizacao"
@@ -81,7 +81,7 @@
                 app:layout_constraintEnd_toEndOf="@id/activity_info_sala_nome"
                 android:textSize="20sp"
                 android:textStyle="normal"
-                android:text="Localização: "/>
+                tools:text="Localização: "/>
 
             <TextView
                 android:id="@+id/activity_info_sala_reservas"

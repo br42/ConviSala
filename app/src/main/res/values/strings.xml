@@ -22,4 +22,10 @@
     <string name="signup_nome">Nome</string>
     <string name="login_criar_conta">Criar Conta</string>
     <string name="signup_email">E-mail</string>
+    <string name="activity_info_sala_nome">Sala: %s</string>
+    <string name="activity_info_sala_localizacao">Localização: %s</string>
+    <string name="fragment_reservas_solicitador">por %s</string>
+    <string name="fragment_reservas_titulo">Suas Reservas:</string>
+    <string name="fragment_salas_titulo">Salas Disponíveis:</string>
+    <string name="communicate">Communicate</string>
 </resources>

@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="16dp"
         android:textStyle="bold"
-        android:text="Salas Disponíveis: "/>
+        android:text="@string/fragment_salas_titulo"/>
 
     <ListView
         android:id="@+id/salas_lista_salas"

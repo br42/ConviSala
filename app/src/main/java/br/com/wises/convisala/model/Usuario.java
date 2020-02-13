@@ -3,9 +3,9 @@ package br.com.wises.convisala.model;
 import androidx.annotation.Nullable;
 
 public class Usuario {
-    private String nome = "";
-    private String email = "";
-    private String senha = "";
+    private String nome;
+    private String email;
+    private String senha;
 
     public Usuario (String nome, String email, String senha) {
         this.nome = nome;
@@ -23,27 +23,18 @@ public class Usuario {
 
         Usuario outro = (Usuario) obj;
 
-        if     (this.getNome().equals(outro.getNome()) &&
+        return (this.getNome().equals(outro.getNome()) &&
                 this.getEmail().equals(outro.getEmail()) &&
-                this.getSenha().equals(outro.getSenha())) {
-            return true;
-        }
-
-        return false;
+                this.getSenha().equals(outro.getSenha()));
     }
 
     public boolean validar(Usuario outro) {
         // Checa se ambos os Usuários têm informações idênticas.
         // Caso tenham, a função retorna ^true^. Caso não, ^false^.
 
-            if (outro != null) {
-            if (this.getEmail().equals(outro.getEmail()) &&
-                this.getSenha().equals(outro.getSenha())) {
-                return true;
-            }
-        }
-
-        return false;
+        return (outro != null &&
+                this.getEmail().equals(outro.getEmail()) &&
+                this.getSenha().equals(outro.getSenha()));
     }
 
     public String getNome() {
