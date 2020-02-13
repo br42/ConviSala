@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.wises.convisala.model.Organizacao;
+import br.com.wises.convisala.service.AutenticacaoSignup;
 import br.com.wises.convisala.service.HttpListaOrganizacoes;
 
 public class SignupActivity extends AppCompatActivity {

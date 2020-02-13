@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import br.com.wises.convisala.service.AutenticacaoLogin;
+
 public class LoginActivity extends AppCompatActivity {
 
     @Override

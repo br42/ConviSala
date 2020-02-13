@@ -1,4 +1,4 @@
-package br.com.wises.convisala;
+package br.com.wises.convisala.service;
 
 import android.os.AsyncTask;
 
