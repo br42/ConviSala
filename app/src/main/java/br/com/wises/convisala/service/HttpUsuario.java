@@ -8,11 +8,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpOrganizacaoUsuario extends AsyncTask<Void, Void, String> {
+import br.com.wises.convisala.Aplicativo;
+
+public class HttpUsuario extends AsyncTask<Void, Void, String> {
     @NonNull private String email;
     @NonNull private String password;
 
-    public HttpOrganizacaoUsuario(@NonNull String email, @NonNull String password) {
+    public HttpUsuario(@NonNull String email, @NonNull String password) {
         this.email = email;
         this.password = password;
     }
@@ -20,7 +22,7 @@ public class HttpOrganizacaoUsuario extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         int responseCode = 0;
-        String wsURL = "http://172.30.248.109:8080/ReservaDeSala/rest/usuario/loginV2/";
+        String wsURL = Aplicativo.baseUrl + "/usuario/login/";
         StringBuilder resposta = new StringBuilder();
         URL obj;
         try {

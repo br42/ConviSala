@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import br.com.wises.convisala.Aplicativo;
 import br.com.wises.convisala.R;
 import br.com.wises.convisala.model.Organizacao;
 import br.com.wises.convisala.model.Reserva;
@@ -109,7 +110,7 @@ public class ReservasFragment extends Fragment {
 
         List<Reserva> reservas = new ArrayList<>();
         try {
-            String jsonSalas = new HttpListaReservasPorUsuario(0).execute().get();
+            String jsonSalas = new HttpListaReservasPorUsuario(Aplicativo.gerenciadorLogin.getUsuario().getId()).execute().get();
             System.out.println("Interpretando Salas: " + jsonSalas + "; ");
             JSONArray listaJson = new JSONArray(jsonSalas);
             JSONObject obj;

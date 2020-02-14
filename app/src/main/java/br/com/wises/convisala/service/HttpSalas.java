@@ -17,7 +17,7 @@ public class HttpSalas extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         int responseCode = 0;
-        String wsURL = "http://172.30.248.109:8080/ReservaDeSala/rest/sala/salas";
+        String wsURL = Aplicativo.baseUrl + "/sala/salas";
         StringBuilder resposta = new StringBuilder();
         URL obj;
         try {

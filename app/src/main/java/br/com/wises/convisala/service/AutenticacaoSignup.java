@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import br.com.wises.convisala.Aplicativo;
+
 public class AutenticacaoSignup extends AsyncTask<Void, Void, String> {
     @NonNull private String nome;
     @NonNull private String email;
@@ -26,7 +28,7 @@ public class AutenticacaoSignup extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         int responseCode = 0;
-        String wsURL = "http://172.30.248.109:8080/ReservaDeSala/rest/usuario/cadastro";
+        String wsURL = Aplicativo.baseUrl + "/usuario/cadastro";
         StringBuilder result = new StringBuilder();
         URL obj;
         try {

@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.wises.convisala.model.Organizacao;
+import br.com.wises.convisala.model.Usuario;
 
 public class GerenciadorLogin {
     private boolean logado;
     private Organizacao organizacao = new Organizacao();
+    private Usuario usuario = new Usuario();
     private SharedPreferences pref;
     private SharedPreferences.Editor editor = null;
 
@@ -33,7 +35,8 @@ public class GerenciadorLogin {
             logado = true;
             String json;
             try {
-                json = new HttpOrganizacaoUsuario(email, senha).execute().get();
+                json = new HttpUsuario(email, senha).execute().get();
+                usuario = parseUsuario(json);
                 organizacao = parseOrganizacaoUsuario(json);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -77,6 +80,14 @@ public class GerenciadorLogin {
         return "";
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     public Organizacao getOrganizacao () {
         return this.organizacao;
     }
@@ -98,16 +109,42 @@ public class GerenciadorLogin {
         return !logado;
     }
 
+
+    public Usuario parseUsuario (String rawUsuario) {
+        System.out.println("Interpretando: \""+rawUsuario+"\"; ");
+        JSONObject usuarioJson;
+        Usuario user = new Usuario();
+
+        try {
+            usuarioJson = new JSONObject(rawUsuario);
+
+            if (usuarioJson.length() <= 0) {
+                return user;
+            }
+
+            user.setId(usuarioJson.optInt("id", 0));
+            user.setNome(usuarioJson.optString("nome", ""));
+            user.setEmail(usuarioJson.optString("email", ""));
+
+            System.out.println("Interpretado com sucesso! ");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
     public Organizacao parseOrganizacaoUsuario (String rawUsuario) {
         System.out.println("Interpretando: \""+rawUsuario+"\"; ");
-        JSONObject jsonObject;
+        JSONObject usuarioJson;
         Organizacao org = new Organizacao();
 
         try {
-            jsonObject = new JSONObject(rawUsuario);
+            usuarioJson = new JSONObject(rawUsuario);
 
-            if (jsonObject.length() > 0) {
-                JSONObject obj = jsonObject.optJSONObject("idOrganizacao");
+            if (usuarioJson.length() > 0) {
+                JSONObject obj = usuarioJson.optJSONObject("idOrganizacao");
                 if (obj != null && obj.length() > 0) {
                     int id; String nome; char tipoOrganizacao;
                     id = obj.optInt("id", 0);
