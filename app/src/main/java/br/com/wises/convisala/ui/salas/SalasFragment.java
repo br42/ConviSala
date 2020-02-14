@@ -134,8 +134,10 @@ public class SalasFragment extends Fragment {
                 }
 
                 salas.add(sala);
-                System.out.println("Salas: Sala Nº" + (i+1) + " interpretada com sucesso! " +
+                try {
+                    System.out.println("Salas: Sala Nº" + (i+1) + " interpretada com sucesso! " +
                         sala.getNome() + " em " + sala.getLocalizacao() + "; ");
+                } catch (Exception e) {e.printStackTrace();}
             }
             adapter.notifyDataSetChanged();
         } catch (Exception e) {

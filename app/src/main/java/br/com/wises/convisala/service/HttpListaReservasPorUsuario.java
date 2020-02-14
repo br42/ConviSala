@@ -9,17 +9,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpListaReservasPorUsuario extends AsyncTask<Void, Void, String> {
-    @NonNull private String dominio;
+import br.com.wises.convisala.Aplicativo;
 
-    public HttpListaReservasPorUsuario(@NonNull String dominio) {
-        this.dominio = dominio;
+public class HttpListaReservasPorUsuario extends AsyncTask<Void, Void, String> {
+    @NonNull private int id;
+
+    public HttpListaReservasPorUsuario(@NonNull int id) {
+        this.id = id;
     }
 
     @Override
     protected String doInBackground(Void... voids) {
         int responseCode = 0;
-        String wsURL = "http://172.30.248.109:8080/ReservaDeSala/rest/organizacao/organizacoesByDominio/";
+        String wsURL = "http://172.30.248.109:8080/ReservaDeSala/rest/reserva/byIdUsuario/";
         StringBuilder resposta = new StringBuilder();
         URL obj;
         try {
@@ -38,7 +40,7 @@ public class HttpListaReservasPorUsuario extends AsyncTask<Void, Void, String> {
             con.setRequestMethod("GET");
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("authorization", "secret");
-            con.setRequestProperty("dominio", dominio);
+            con.setRequestProperty("id_usuario", "" + id);
             con.setConnectTimeout(2000);
             con.connect();
 

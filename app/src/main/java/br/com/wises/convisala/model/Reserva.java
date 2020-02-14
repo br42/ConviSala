@@ -1,49 +1,108 @@
 package br.com.wises.convisala.model;
 
-import br.com.wises.convisala.model.Sala;
+import java.util.Date;
 
 public class Reserva {
-    private String temaDaReserva = "";
-    private String solicitadorDaReserva = "";
+    private int id = 0;
     private Sala salaReservada = null;
-    private long dataDaReserva = 0;
-    private long horaInicio = 0;
-    private long horaFim = 0;
+    private Usuario usuario = null;
+    private String nomeOrganizador = "";
+    private Date horaInicio = null;
+    private Date horaFim = null;
+    private String descricao = "";
+    private Date dataCriacao = null;
+    private Date dataAlteracao = null;
 
     public Reserva () {
 
     }
 
-    public Reserva (String temaDaReserva, String solicitadorDaReserva, Sala salaReservada, long dataDaReserva, long horaInicio, long horaFim) {
-        this.temaDaReserva = temaDaReserva;
-        this.solicitadorDaReserva = solicitadorDaReserva;
+    public Reserva (int id) {
+        this.id = id;
+    }
+
+    public Reserva (int id, String descricao, Usuario usuario, Sala salaReservada, Date horaInicio, Date horaFim) {
+        this.descricao = descricao;
+        this.usuario = usuario;
         this.salaReservada = salaReservada;
-        this.dataDaReserva = dataDaReserva;
         this.horaInicio = horaInicio;
         this.horaFim = horaFim;
     }
 
-    public String getTema() {
-        return temaDaReserva;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public String getSolicitador() {
-        return solicitadorDaReserva;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     public Sala getSala() {
         return salaReservada;
     }
 
-    public long getData() {
-        return dataDaReserva;
-    }
-
-    public long getHoraInicio() {
+    public Date getHoraInicio() {
         return horaInicio;
     }
 
-    public long getHoraFim() {
+    public Date getHoraFim() {
         return horaFim;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Sala getSalaReservada() {
+        return salaReservada;
+    }
+
+    public void setSalaReservada(Sala salaReservada) {
+        this.salaReservada = salaReservada;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getNomeOrganizador() {
+        return nomeOrganizador;
+    }
+
+    public void setNomeOrganizador(String nomeOrganizador) {
+        this.nomeOrganizador = nomeOrganizador;
+    }
+
+    public void setHoraInicio(Date horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public void setHoraFim(Date horaFim) {
+        this.horaFim = horaFim;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public Date getDataAlteracao() {
+        return dataAlteracao;
+    }
+
+    public void setDataAlteracao(Date dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
+    }
+
 }

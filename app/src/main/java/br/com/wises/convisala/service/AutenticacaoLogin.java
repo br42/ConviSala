@@ -38,7 +38,8 @@ public class AutenticacaoLogin extends AsyncTask<Void, Void, String> {
         }
         try {
             con.setRequestMethod("GET");
-            con.setRequestProperty("Content-Type", "*/*");
+            //con.setRequestProperty("Content-Type", "*/*");
+            con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("authorization", "secret");
             con.setRequestProperty("email", email);
             con.setRequestProperty("password", password);

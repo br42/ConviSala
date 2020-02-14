@@ -1,18 +1,19 @@
 package br.com.wises.convisala.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.wises.convisala.model.Reserva;
 
 public class ReservaDAO {
 
-    private final ArrayList<Reserva> reservaLista =  new ArrayList<>();
+    private final List<Reserva> reservaLista =  new ArrayList<>();
 
     public ReservaDAO () {
 
     }
 
-    public ArrayList<Reserva> obterLista() {
+    public List<Reserva> obterLista() {
         return reservaLista;
     }
 
@@ -20,7 +21,7 @@ public class ReservaDAO {
         reservaLista.add(reserva);
     }
 
-    public void adicionarLista (ArrayList<Reserva> reservas) {
+    public void adicionarLista (List<Reserva> reservas) {
         reservaLista.addAll(reservas);
     }
 

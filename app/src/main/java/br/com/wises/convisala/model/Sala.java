@@ -26,6 +26,10 @@ public class Sala {
 
     }
 
+    public Sala (int id) {
+        this.id = id;
+    }
+
     public Sala (int numero, int andar, String nome, String pavimento, String localizacao) {
         this.numero = numero;
         this.andar = andar;

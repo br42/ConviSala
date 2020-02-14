@@ -6,6 +6,7 @@ import br.com.wises.convisala.service.GerenciadorLogin;
 
 public class Aplicativo extends Application {
     public static GerenciadorLogin gerenciadorLogin = null;
+    public static final String baseUrl = "";
 
     @Override
     public void onCreate() {

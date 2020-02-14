@@ -47,7 +47,11 @@ public class LoginActivity extends AppCompatActivity {
             System.out.println(status);
 
             //if (usuario.validar(referencia)) {
-            if (status.equals("Login efetuado com sucesso!") && Aplicativo.gerenciadorLogin.entrar(emailAnterior, senhaAnterior)) {
+
+            int idOrganizacao = Aplicativo.gerenciadorLogin.parseOrganizacaoUsuario(status).getId();
+
+            //if (status.equals("Login efetuado com sucesso!") && Aplicativo.gerenciadorLogin.entrar(emailAnterior, senhaAnterior)) {
+            if (idOrganizacao != 0 && Aplicativo.gerenciadorLogin.entrar(emailAnterior, senhaAnterior)) {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             } else {
                 emailView.setText(emailAnterior);

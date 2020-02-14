@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.wises.convisala.model.Organizacao;
-import br.com.wises.convisala.service.HttpOrganizacaoUsuario;
 
 public class GerenciadorLogin {
     private boolean logado;
@@ -35,7 +34,7 @@ public class GerenciadorLogin {
             String json;
             try {
                 json = new HttpOrganizacaoUsuario(email, senha).execute().get();
-                organizacao = parseOrganizacoesUsuario(json);
+                organizacao = parseOrganizacaoUsuario(json);
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
@@ -99,7 +98,7 @@ public class GerenciadorLogin {
         return !logado;
     }
 
-    public Organizacao parseOrganizacoesUsuario (String rawUsuario) {
+    public Organizacao parseOrganizacaoUsuario (String rawUsuario) {
         System.out.println("Interpretando: \""+rawUsuario+"\"; ");
         JSONObject jsonObject;
         Organizacao org = new Organizacao();
