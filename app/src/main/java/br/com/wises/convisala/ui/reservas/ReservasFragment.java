@@ -91,17 +91,21 @@ public class ReservasFragment extends Fragment {
 
             @Override
             public View getView(int posicao, View convertView, ViewGroup parent) {
-                Reserva reserva = getItem(posicao);
+                Reserva reserva = dao.obterReserva(posicao);
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_reserva, parent, false);
                 }
-                ((TextView) convertView.findViewById(R.id.item_reserva_solicitador)).setText(String.format(getString(R.string.fragment_reservas_solicitador), reserva.getNomeOrganizador()));
-                ((TextView) convertView.findViewById(R.id.item_reserva_tema)).setText(reserva.getDescricao());
-                ((TextView) convertView.findViewById(R.id.item_reserva_sala)).setText((reserva.getSala().toString()));
-                ((TextView) convertView.findViewById(R.id.item_reserva_andar)).setText(("("+ reserva.getSala().getAndar()+"º Andar)"));
-                ((TextView) convertView.findViewById(R.id.item_reserva_horario_inicio)).setText(("das "+reserva.getHoraInicio()));
-                ((TextView) convertView.findViewById(R.id.item_reserva_horario_fim)).setText(("às "+reserva.getHoraFim()));
-                //((TextView) convertView.findViewById(R.id.item_reserva_data)).setText(("Dia "+reserva.getData()));
+                try {
+                    ((TextView) convertView.findViewById(R.id.item_reserva_solicitador)).setText(String.format(getString(R.string.fragment_reservas_solicitador), reserva.getNomeOrganizador()));
+                    ((TextView) convertView.findViewById(R.id.item_reserva_tema)).setText(reserva.getDescricao());
+                    //((TextView) convertView.findViewById(R.id.item_reserva_sala)).setText((reserva.getSala().toString()));
+                    //((TextView) convertView.findViewById(R.id.item_reserva_andar)).setText(("(" + reserva.getSala().getAndar() + "º Andar)"));
+                    //((TextView) convertView.findViewById(R.id.item_reserva_horario_inicio)).setText(("das " + reserva.getHoraInicio()));
+                    //((TextView) convertView.findViewById(R.id.item_reserva_horario_fim)).setText(("às " + reserva.getHoraFim()));
+                    //((TextView) convertView.findViewById(R.id.item_reserva_data)).setText(("Dia "+reserva.getData()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 return convertView;
             }
         };
