@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.wises.convisala.R;
 import br.com.wises.convisala.model.Sala;
-import br.com.wises.convisala.ui.salas.SalasFragment;
 
 public class InfoSalaActivity extends AppCompatActivity {
 

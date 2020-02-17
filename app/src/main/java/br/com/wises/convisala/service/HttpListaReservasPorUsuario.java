@@ -12,9 +12,9 @@ import java.net.URL;
 import br.com.wises.convisala.Aplicativo;
 
 public class HttpListaReservasPorUsuario extends AsyncTask<Void, Void, String> {
-    @NonNull private int id;
+    @NonNull private Integer id;
 
-    public HttpListaReservasPorUsuario(@NonNull int id) {
+    public HttpListaReservasPorUsuario(@NonNull Integer id) {
         this.id = id;
     }
 
