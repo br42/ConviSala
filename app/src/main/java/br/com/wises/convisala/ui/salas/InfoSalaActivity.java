@@ -1,4 +1,4 @@
-package br.com.wises.convisala;
+package br.com.wises.convisala.ui.salas;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -6,6 +6,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import br.com.wises.convisala.R;
 import br.com.wises.convisala.model.Sala;
 import br.com.wises.convisala.ui.salas.SalasFragment;
 

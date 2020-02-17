@@ -43,8 +43,16 @@
         </activity>
 
         <activity
-            android:name=".InfoSalaActivity"
+            android:name=".ui.salas.InfoSalaActivity"
             android:label="Informações da Sala">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.reservas.CadastrarReservaActivity"
+            android:label="Cadastrar Reserva">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

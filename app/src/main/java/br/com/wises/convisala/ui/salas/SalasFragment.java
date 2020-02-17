@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.wises.convisala.service.HttpSalas;
-import br.com.wises.convisala.InfoSalaActivity;
 import br.com.wises.convisala.R;
 import br.com.wises.convisala.dao.SalaDAO;
 import br.com.wises.convisala.model.Organizacao;
@@ -81,7 +80,7 @@ public class SalasFragment extends Fragment {
 
             @Override
             public long getItemId(int posicao) {
-                return 0;
+                return dao.obterSala(posicao).getId();
             }
 
             @Override

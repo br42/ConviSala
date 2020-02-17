@@ -53,7 +53,7 @@ public class HttpListaReservasPorUsuario extends AsyncTask<Void, Void, String> {
                 resposta.append(line);
             }
             rd.close();
-            //System.out.println(result.toString());
+            //System.out.println(resposta.toString());
 
             //result.append(new String (Base64.decode(base64.toString(), 0), "UTF-8"));
 

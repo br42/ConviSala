@@ -1,5 +1,6 @@
 package br.com.wises.convisala.ui.reservas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,20 +19,17 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import br.com.wises.convisala.Aplicativo;
 import br.com.wises.convisala.R;
-import br.com.wises.convisala.model.Organizacao;
 import br.com.wises.convisala.model.Reserva;
 import br.com.wises.convisala.dao.ReservaDAO;
-import br.com.wises.convisala.model.Sala;
-import br.com.wises.convisala.model.Usuario;
 import br.com.wises.convisala.service.HttpListaReservasPorUsuario;
-import br.com.wises.convisala.service.HttpSalas;
 
 public class ReservasFragment extends Fragment {
 
@@ -54,8 +52,10 @@ public class ReservasFragment extends Fragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
+
+                startActivity(new Intent(getContext(), CadastrarReservaActivity.class));
                 }
             });
         }
@@ -86,23 +86,26 @@ public class ReservasFragment extends Fragment {
 
             @Override
             public long getItemId(int posicao) {
-                return 0;
+                return dao.obterReserva(posicao).getId();
             }
 
             @Override
             public View getView(int posicao, View convertView, ViewGroup parent) {
-                Reserva reserva = dao.obterReserva(posicao);
+                Reserva reserva = getItem(posicao);
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_reserva, parent, false);
                 }
                 try {
-                    ((TextView) convertView.findViewById(R.id.item_reserva_solicitador)).setText(String.format(getString(R.string.fragment_reservas_solicitador), reserva.getNomeOrganizador()));
                     ((TextView) convertView.findViewById(R.id.item_reserva_tema)).setText(reserva.getDescricao());
+                    ((TextView) convertView.findViewById(R.id.item_reserva_solicitador)).setText(("por: " + reserva.getNomeOrganizador()));
                     //((TextView) convertView.findViewById(R.id.item_reserva_sala)).setText((reserva.getSala().toString()));
                     //((TextView) convertView.findViewById(R.id.item_reserva_andar)).setText(("(" + reserva.getSala().getAndar() + "º Andar)"));
                     //((TextView) convertView.findViewById(R.id.item_reserva_horario_inicio)).setText(("das " + reserva.getHoraInicio()));
                     //((TextView) convertView.findViewById(R.id.item_reserva_horario_fim)).setText(("às " + reserva.getHoraFim()));
-                    //((TextView) convertView.findViewById(R.id.item_reserva_data)).setText(("Dia "+reserva.getData()));
+                    ((TextView) convertView.findViewById(R.id.item_reserva_data)).setText(("Dia " + reserva.getHoraInicio().getTime()));
+
+                    System.out.println(reserva.getDescricao());
+                    System.out.println(String.format(getString(R.string.fragment_reservas_solicitador), reserva.getNomeOrganizador()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -114,6 +117,7 @@ public class ReservasFragment extends Fragment {
 
         List<Reserva> reservas = new ArrayList<>();
         try {
+            System.out.println("ID do Usuário: " + Aplicativo.gerenciadorLogin.getUsuario().getId() + "; ");
             String jsonSalas = new HttpListaReservasPorUsuario(Aplicativo.gerenciadorLogin.getUsuario().getId()).execute().get();
             System.out.println("Interpretando Salas: " + jsonSalas + "; ");
             JSONArray listaJson = new JSONArray(jsonSalas);
@@ -122,23 +126,11 @@ public class ReservasFragment extends Fragment {
                 obj = listaJson.getJSONObject(i);
                 Reserva reserva = new Reserva();
 
-                /*reserva.setNome(obj.optString("nome",""));
-                reserva.setLocalizacao(obj.optString("localizacao",""));
                 reserva.setId(obj.optInt("id",0));
-                reserva.setMultimidia(obj.optBoolean("possuiMultimidia",false));
-                reserva.setArCondicionado(obj.optBoolean("possuiArcon",false));
-                reserva.setQuantidadePessoasSentadas(obj.optInt("quantidadePessoasSentadas",0));
-                reserva.setArea(obj.optDouble("areaDaSala",0));
-                reserva.setLatitude(obj.optDouble("latitude",0));
-                reserva.setLongitude(obj.optDouble("longitude",0));
+                reserva.setDescricao(obj.optString("descricao",""));
+                reserva.setNomeOrganizador(obj.optString("nomeOrganizador",""));
 
-                JSONObject organizacao = obj.optJSONObject("idOrganizacao");
-                if (organizacao != null && organizacao.length() > 0) {
-                    reserva.setOrganizacao(new Organizacao(
-                            organizacao.optInt("id",0),
-                            organizacao.optString("nome",""),
-                            organizacao.optString("tipoOrganizacao","\0").charAt(0)));
-                }*/
+                //reserva.setHoraInicio();
 
                 reservas.add(reserva);
                 try {
@@ -153,6 +145,7 @@ public class ReservasFragment extends Fragment {
         dao.adicionarLista(reservas);
 
         return root;
+
     }
     
 }
