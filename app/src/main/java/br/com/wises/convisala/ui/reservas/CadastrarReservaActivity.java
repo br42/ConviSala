@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import br.com.wises.convisala.Aplicativo;
 import br.com.wises.convisala.R;
 import br.com.wises.convisala.service.HttpCadastrarReserva;
 
@@ -39,12 +40,14 @@ public class CadastrarReservaActivity extends AppCompatActivity {
                 try {
                     object.put("descricao", descricao);
                     object.put("id_sala", salaId);
+                    object.put("id_sala", Aplicativo.gerenciadorLogin.getUsuario().getId());
                 } catch (Exception e) {e.printStackTrace();}
 
                 String base64 = "";
                 try {
                     base64 = Base64.encodeToString(object.toString().getBytes("UTF-8"), Base64.NO_WRAP);
                     System.out.println("Cadastrando Reserva: " + (new HttpCadastrarReserva(base64).execute().get()));
+                    finish();
                 } catch (Exception e) {e.printStackTrace();}
 
             }
