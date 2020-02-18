@@ -40,7 +40,9 @@ public class CadastrarReservaActivity extends AppCompatActivity {
                 try {
                     object.put("descricao", descricao);
                     object.put("id_sala", salaId);
-                    object.put("id_sala", Aplicativo.gerenciadorLogin.getUsuario().getId());
+                    object.put("id_usuario", Aplicativo.gerenciadorLogin.getUsuario().getId());
+                    object.put("data_hora_inicio", 0L);
+                    object.put("data_hora_fim", 0L);
                 } catch (Exception e) {e.printStackTrace();}
 
                 String base64 = "";
