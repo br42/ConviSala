@@ -57,6 +57,7 @@ public class CadastrarReservaActivity extends AppCompatActivity {
                 try {
                     base64 = Base64.encodeToString(object.toString().getBytes("UTF-8"), Base64.NO_WRAP);
                     System.out.println("Cadastrando Reserva: " + (new HttpCadastrarReserva(base64).execute().get()));
+                    System.out.println("Reserva em Base64: " + base64);
                     finish();
                 } catch (Exception e) {e.printStackTrace();}
 
