@@ -57,12 +57,8 @@ public class Reserva {
         this.id = id;
     }
 
-    public Sala getSalaReservada() {
-        return salaReservada;
-    }
-
-    public void setSalaReservada(Sala salaReservada) {
-        this.salaReservada = salaReservada;
+    public void setSala(Sala sala) {
+        this.salaReservada = sala;
     }
 
     public void setUsuario(Usuario usuario) {

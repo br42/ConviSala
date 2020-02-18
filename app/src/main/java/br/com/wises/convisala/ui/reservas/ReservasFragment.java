@@ -14,21 +14,24 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Date;
+import java.io.UncheckedIOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import br.com.wises.convisala.Aplicativo;
 import br.com.wises.convisala.R;
 import br.com.wises.convisala.model.Reserva;
 import br.com.wises.convisala.dao.ReservaDAO;
+import br.com.wises.convisala.model.Sala;
+import br.com.wises.convisala.model.Usuario;
 import br.com.wises.convisala.service.HttpListaReservasPorUsuario;
 
 public class ReservasFragment extends Fragment {
@@ -100,9 +103,16 @@ public class ReservasFragment extends Fragment {
                     ((TextView) convertView.findViewById(R.id.item_reserva_solicitador)).setText(("por: " + reserva.getNomeOrganizador()));
                     //((TextView) convertView.findViewById(R.id.item_reserva_sala)).setText((reserva.getSala().toString()));
                     //((TextView) convertView.findViewById(R.id.item_reserva_andar)).setText(("(" + reserva.getSala().getAndar() + "º Andar)"));
-                    //((TextView) convertView.findViewById(R.id.item_reserva_horario_inicio)).setText(("das " + reserva.getHoraInicio()));
-                    //((TextView) convertView.findViewById(R.id.item_reserva_horario_fim)).setText(("às " + reserva.getHoraFim()));
-                    ((TextView) convertView.findViewById(R.id.item_reserva_data)).setText(("Dia " + reserva.getHoraInicio().getTime()));
+
+                    try { ((TextView) convertView.findViewById(R.id.item_reserva_horario_inicio))
+                                .setText(("das " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
+                    } catch (Exception e) {e.printStackTrace();}
+                    try { ((TextView) convertView.findViewById(R.id.item_reserva_horario_fim))
+                                .setText(("às " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
+                    } catch (Exception e) {e.printStackTrace();}
+                    try { ((TextView) convertView.findViewById(R.id.item_reserva_data))
+                                .setText(("Dia " + new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).format(reserva.getHoraInicio())));
+                    } catch (Exception e) {e.printStackTrace();}
 
                     System.out.println(reserva.getDescricao());
                     System.out.println(String.format(getString(R.string.fragment_reservas_solicitador), reserva.getNomeOrganizador()));
@@ -113,7 +123,6 @@ public class ReservasFragment extends Fragment {
             }
         };
         home_listview.setAdapter(adapter);
-
 
         List<Reserva> reservas = new ArrayList<>();
         try {
@@ -130,7 +139,41 @@ public class ReservasFragment extends Fragment {
                 reserva.setDescricao(obj.optString("descricao",""));
                 reserva.setNomeOrganizador(obj.optString("nomeOrganizador",""));
 
-                //reserva.setHoraInicio();
+                reserva.setUsuario(new Usuario());
+                reserva.getUsuario().setId(obj.optInt("idUsuario", 0));
+
+                reserva.setSala(new Sala());
+                reserva.getSala().setId(obj.optInt("idSala", 0));
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z[UTC]'", Locale.FRANCE);
+
+                try {
+                    Date data;
+                    String dataString = obj.optString("dataHoraInicio", "");
+                    data = format.parse(dataString);
+                    reserva.setHoraInicio(data);
+                } catch (Exception e) {e.printStackTrace();}
+
+                try {
+                    Date data;
+                    String dataString = obj.optString("dataHoraFim", "");
+                    data = format.parse(dataString);
+                    reserva.setHoraFim(data);
+                } catch (Exception e) {e.printStackTrace();}
+
+                try {
+                    Date data;
+                    String dataString = obj.optString("dataCriacao", "");
+                    data = format.parse(dataString);
+                    reserva.setDataCriacao(data);
+                } catch (Exception e) {e.printStackTrace();}
+
+                try {
+                    Date data;
+                    String dataString = obj.optString("DataAlteracao", "");
+                    data = format.parse(dataString);
+                    reserva.setDataAlteracao(data);
+                } catch (Exception e) {e.printStackTrace();}
 
                 reservas.add(reserva);
                 try {

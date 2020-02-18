@@ -12,13 +12,13 @@ import java.net.URL;
 
 import br.com.wises.convisala.Aplicativo;
 
-public class AutenticacaoSignup extends AsyncTask<Void, Void, String> {
+public class AutenticacaoSignin extends AsyncTask<Void, Void, String> {
     @NonNull private String nome;
     @NonNull private String email;
     @NonNull private String password;
     //@NonNull private String dominio;
 
-    public AutenticacaoSignup(@NonNull String nome, @NonNull String email, @NonNull String password, @NonNull String dominio) {
+    public AutenticacaoSignin(@NonNull String nome, @NonNull String email, @NonNull String password, @NonNull String dominio) {
         this.nome = nome;
         this.email = email;
         this.password = password;
