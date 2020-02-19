@@ -2,6 +2,7 @@ package br.com.wises.convisala.ui.reservas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -74,15 +76,16 @@ public class ReservasFragment extends Fragment {
             }
         });
 
+        //registerForContextMenu(reservas_listview);
 
-        reservas_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        /*reservas_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
+                view.showContextMenu();
 
                 return true;
             }
-        });
+        });*/
 
         BaseAdapter adapter = new BaseAdapter() {
             @Override
@@ -198,5 +201,16 @@ public class ReservasFragment extends Fragment {
         return root;
 
     }
-    
+
+    /*@Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        try {
+            getActivity().getMenuInflater().inflate(R.menu.lista_menu, menu);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }*/
+
 }

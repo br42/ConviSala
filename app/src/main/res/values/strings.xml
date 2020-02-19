@@ -28,4 +28,6 @@
     <string name="fragment_reservas_titulo">Suas Reservas:</string>
     <string name="fragment_salas_titulo">Salas Disponíveis:</string>
     <string name="communicate">Comunicação</string>
+    <string name="lista_menu_editar">Editar</string>
+    <string name="lista_menu_remover">Remover</string>
 </resources>
