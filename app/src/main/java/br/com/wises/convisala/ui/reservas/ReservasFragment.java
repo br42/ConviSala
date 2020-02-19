@@ -1,5 +1,7 @@
 package br.com.wises.convisala.ui.reservas;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -34,11 +36,14 @@ import br.com.wises.convisala.dao.ReservaDAO;
 import br.com.wises.convisala.model.Sala;
 import br.com.wises.convisala.model.Usuario;
 import br.com.wises.convisala.service.HttpListaReservasPorUsuario;
+import br.com.wises.convisala.service.HttpService;
+import br.com.wises.convisala.service.MetodoHttp;
 
 public class ReservasFragment extends Fragment {
 
     private final ReservaDAO dao = new ReservaDAO();
     private static Reserva reservaEscolhida = null;
+    private AlertDialog.Builder dialogoRemocao = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -73,6 +78,26 @@ public class ReservasFragment extends Fragment {
         /*dao.adicionarReserva(new Reserva (0, "Frifaire", new Usuario(0, "Claudinei Neto", "a@b.c", ""),
                 new Sala(613,42,"","",""),
                 new GregorianCalendar(2020, 2, 29).getTime(), new GregorianCalendar(2020, 2, 29).getTime()));*/
+
+        dialogoRemocao = new AlertDialog.Builder(getContext());
+        dialogoRemocao.setTitle("Cancelar Reserva");
+        dialogoRemocao.setMessage("Deseja cancelar essa reserva?");
+        dialogoRemocao.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //nada;
+            }
+        });
+        dialogoRemocao.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    String json = new HttpService("", MetodoHttp.Post, new ArrayList<String>(), new ArrayList<String>()).execute().get();
+                } catch (Exception e) {e.printStackTrace();}
+                //confirmacaoSaida.setFalse();
+            }
+        });
+        dialogoRemocao.create();
 
         ListView reservas_listview = root.findViewById(R.id.home_lista_reservas);
 
