@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -37,6 +38,7 @@ import br.com.wises.convisala.service.HttpListaReservasPorUsuario;
 public class ReservasFragment extends Fragment {
 
     private final ReservaDAO dao = new ReservaDAO();
+    private static Reserva reservaEscolhida = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -76,16 +78,29 @@ public class ReservasFragment extends Fragment {
             }
         });
 
-        //registerForContextMenu(reservas_listview);
+        registerForContextMenu(reservas_listview);
 
-        /*reservas_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        class ObjReserva {
+            public void setReserva(Reserva reserva) {
+                setReservaEscolhida(reserva);
+            }
+
+            public Reserva getReserva() {
+                return ReservasFragment.getReservaEscolhida();
+            }
+        }
+
+        final ObjReserva objReserva = new ObjReserva();
+
+        reservas_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                view.showContextMenu();
+                //view.showContextMenu();
+                objReserva.setReserva(dao.obterReserva(position));
 
-                return true;
+                return false;
             }
-        });*/
+        });
 
         BaseAdapter adapter = new BaseAdapter() {
             @Override
@@ -202,15 +217,38 @@ public class ReservasFragment extends Fragment {
 
     }
 
-    /*@Override
+    @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
         try {
+
             getActivity().getMenuInflater().inflate(R.menu.lista_menu, menu);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        super.onCreateContextMenu(menu, v, menuInfo);
-    }*/
 
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.fragment_reservas_lista_menu_editar) {
+            // Editar;
+            // startActivity(new Intent (getContext(), ###.class));
+        } else if (item.getItemId() == R.id.fragment_reservas_lista_menu_remover) {
+            // Remover;
+        }
+
+        return super.onContextItemSelected(item);
+    }
+
+    //@SuppressWarnings("WeakerAccess")
+
+    private void setReservaEscolhida(Reserva reserva) {
+        ReservasFragment.reservaEscolhida = reserva;
+    }
+
+    public static Reserva getReservaEscolhida() {
+        return ReservasFragment.reservaEscolhida;
+    }
 }

@@ -6,20 +6,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
-import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import java.util.Date;
 
 import br.com.wises.convisala.Aplicativo;
 import br.com.wises.convisala.R;
 import br.com.wises.convisala.service.HttpCadastrarReserva;
 
+@SuppressWarnings("CharsetObjectCanBeUsed")
 public class CadastrarReservaActivity extends AppCompatActivity {
 
     @Override
@@ -38,7 +34,7 @@ public class CadastrarReservaActivity extends AppCompatActivity {
                 CalendarView horaFimView = findViewById(R.id.activity_cadastrar_reserva_hora_fim);
 
                 String descricao = descricaoView.getText().toString();
-                Integer salaId = 0;
+                int salaId = 0;
                 try {salaId = Integer.parseInt(salaView.getText().toString());} catch (Exception e) {e.printStackTrace();}
                 long horaInicio = horaInicioView.getDate();
                 long horaFim = horaFimView.getDate();

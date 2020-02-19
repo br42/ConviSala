@@ -28,6 +28,7 @@ import br.com.wises.convisala.dao.SalaDAO;
 import br.com.wises.convisala.model.Organizacao;
 import br.com.wises.convisala.model.Sala;
 
+@SuppressWarnings("WeakerAccess")
 public class SalasFragment extends Fragment {
 
     private final SalaDAO dao = new SalaDAO();
@@ -95,7 +96,7 @@ public class SalasFragment extends Fragment {
                     ((TextView) convertView.findViewById(R.id.item_sala_andar))
                             .setText((sala.getOrganizacao() != null) ? (sala.getOrganizacao().getNome()) : (""));
                     ((TextView) convertView.findViewById(R.id.item_sala_bairro)).setText(("" + sala.getQuantidadePessoasSentadas() + " cadeiras"));
-                    ((TextView) convertView.findViewById(R.id.item_sala_cidade)).setText("(" + sala.getArea() + "m²)");
+                    ((TextView) convertView.findViewById(R.id.item_sala_cidade)).setText(("(" + sala.getArea() + "m²)"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
