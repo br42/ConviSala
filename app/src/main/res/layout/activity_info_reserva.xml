@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--androidx.cardview.widget.CardView
+                android:id="@+id/activity_info_reserva_caixa"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardPreventCornerOverlap="false"
+                app:cardCornerRadius="8dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/activity_info_reserva_titulo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:text="Informações da reserva: " />
+
+                    <Space
+                        app:layout_constraintTop_toBottomOf="@id/activity_info_reserva_titulo"
+                        app:layout_constraintStart_toStartOf="@id/activity_info_reserva_titulo"
+                        app:layout_constraintEnd_toEndOf="@id/activity_info_reserva_titulo"
+                        android:layout_width="0dp"
+                        android:layout_height="8dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView-->
+
+            <TextView
+                android:id="@+id/activity_info_reserva_descricao"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                tools:text="Descrição: "/>
+
+            <TextView
+                android:id="@+id/activity_info_reserva_organizador"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/activity_info_reserva_descricao"
+                app:layout_constraintStart_toStartOf="@id/activity_info_reserva_descricao"
+                app:layout_constraintEnd_toEndOf="@id/activity_info_reserva_descricao"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                tools:text="Organizador: "/>
+
+            <TextView
+                android:id="@+id/activity_info_reserva_reservas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/activity_info_reserva_organizador"
+                app:layout_constraintStart_toStartOf="@id/activity_info_reserva_organizador"
+                app:layout_constraintEnd_toEndOf="@id/activity_info_reserva_organizador"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                android:text="Duração: "/>
+
+            <CalendarView
+                android:id="@+id/activity_info_reserva_calendario"
+                android:layout_width="0dp"
+                android:layout_height="350dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/activity_info_reserva_reservas"
+                app:layout_constraintStart_toStartOf="@id/activity_info_reserva_reservas"
+                app:layout_constraintEnd_toEndOf="@id/activity_info_reserva_reservas"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

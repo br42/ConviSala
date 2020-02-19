@@ -58,6 +58,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.reservas.InfoReservaActivity"
+            android:label="Informações da Reserva">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

@@ -43,13 +43,18 @@ public class ReservasFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_reservas, container, false);
-        //final TextView textView = root.findViewById(R.id.text_home);
-        //homeViewModel.getText().observe(this, new Observer<String>() {
-        //    @Override
-        //    public void onChanged(@Nullable String s) {
-        //        textView.setText(s);
-        //    }
-        //});
+
+        class ObjReserva {
+            void setReserva(Reserva reserva) {
+                setReservaEscolhida(reserva);
+            }
+
+            Reserva getReserva() {
+                return ReservasFragment.getReservaEscolhida();
+            }
+        }
+
+        final ObjReserva objReserva = new ObjReserva();
 
         //FloatingActionButton fab = getView().findViewById(R.id.fab);
         FloatingActionButton fab = root.findViewById(R.id.fab);
@@ -80,17 +85,7 @@ public class ReservasFragment extends Fragment {
 
         registerForContextMenu(reservas_listview);
 
-        class ObjReserva {
-            public void setReserva(Reserva reserva) {
-                setReservaEscolhida(reserva);
-            }
 
-            public Reserva getReserva() {
-                return ReservasFragment.getReservaEscolhida();
-            }
-        }
-
-        final ObjReserva objReserva = new ObjReserva();
 
         reservas_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -234,7 +229,7 @@ public class ReservasFragment extends Fragment {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.fragment_reservas_lista_menu_editar) {
             // Editar;
-            // startActivity(new Intent (getContext(), ###.class));
+            startActivity(new Intent (getContext(), InfoReservaActivity.class));
         } else if (item.getItemId() == R.id.fragment_reservas_lista_menu_remover) {
             // Remover;
         }
