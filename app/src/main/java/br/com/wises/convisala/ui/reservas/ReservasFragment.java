@@ -16,10 +16,8 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UncheckedIOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,12 +65,22 @@ public class ReservasFragment extends Fragment {
                 new Sala(613,42,"","",""),
                 new GregorianCalendar(2020, 2, 29).getTime(), new GregorianCalendar(2020, 2, 29).getTime()));*/
 
-        ListView home_listview = root.findViewById(R.id.home_lista_reservas);
+        ListView reservas_listview = root.findViewById(R.id.home_lista_reservas);
 
-        home_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        reservas_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+            }
+        });
+
+
+        reservas_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                return true;
             }
         });
 
@@ -122,7 +130,7 @@ public class ReservasFragment extends Fragment {
                 return convertView;
             }
         };
-        home_listview.setAdapter(adapter);
+        reservas_listview.setAdapter(adapter);
 
         List<Reserva> reservas = new ArrayList<>();
         try {
