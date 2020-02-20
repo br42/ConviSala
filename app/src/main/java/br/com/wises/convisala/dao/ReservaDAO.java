@@ -33,4 +33,12 @@ public class ReservaDAO {
         return reservaLista.size();
     }
 
+    public void removerReserva (int posicao) {
+        reservaLista.remove(posicao);
+    }
+
+    public void removerReserva (Reserva reserva) {
+        reservaLista.remove(reserva);
+    }
+
 }

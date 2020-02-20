@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -51,7 +52,7 @@ public class ReservasFragment extends Fragment {
 
         class ObjReserva {
             void setReserva(Reserva reserva) {
-                setReservaEscolhida(reserva);
+                ReservasFragment.setReservaEscolhida(reserva);
             }
 
             Reserva getReserva() {
@@ -75,54 +76,8 @@ public class ReservasFragment extends Fragment {
             });
         }
 
-        /*dao.adicionarReserva(new Reserva (0, "Frifaire", new Usuario(0, "Claudinei Neto", "a@b.c", ""),
-                new Sala(613,42,"","",""),
-                new GregorianCalendar(2020, 2, 29).getTime(), new GregorianCalendar(2020, 2, 29).getTime()));*/
-
-        dialogoRemocao = new AlertDialog.Builder(getContext());
-        dialogoRemocao.setTitle("Cancelar Reserva");
-        dialogoRemocao.setMessage("Deseja cancelar essa reserva?");
-        dialogoRemocao.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //nada;
-            }
-        });
-        dialogoRemocao.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    String json = new HttpService("", MetodoHttp.Post, new ArrayList<String>(), new ArrayList<String>()).execute().get();
-                } catch (Exception e) {e.printStackTrace();}
-                //confirmacaoSaida.setFalse();
-            }
-        });
-        dialogoRemocao.create();
-
         ListView reservas_listview = root.findViewById(R.id.home_lista_reservas);
-
-        reservas_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
-
-        registerForContextMenu(reservas_listview);
-
-
-
-        reservas_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //view.showContextMenu();
-                objReserva.setReserva(dao.obterReserva(position));
-
-                return false;
-            }
-        });
-
-        BaseAdapter adapter = new BaseAdapter() {
+        final BaseAdapter adapter = new BaseAdapter() {
             @Override
             public int getCount() {
                 return dao.quantiaDeReservas();
@@ -151,13 +106,13 @@ public class ReservasFragment extends Fragment {
                     //((TextView) convertView.findViewById(R.id.item_reserva_andar)).setText(("(" + reserva.getSala().getAndar() + "º Andar)"));
 
                     try { ((TextView) convertView.findViewById(R.id.item_reserva_horario_inicio))
-                                .setText(("das " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
+                            .setText(("das " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
                     } catch (Exception e) {e.printStackTrace();}
                     try { ((TextView) convertView.findViewById(R.id.item_reserva_horario_fim))
-                                .setText(("às " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
+                            .setText(("às " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
                     } catch (Exception e) {e.printStackTrace();}
                     try { ((TextView) convertView.findViewById(R.id.item_reserva_data))
-                                .setText(("Dia " + new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).format(reserva.getHoraInicio())));
+                            .setText(("Dia " + new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).format(reserva.getHoraInicio())));
                     } catch (Exception e) {e.printStackTrace();}
 
                     System.out.println(reserva.getDescricao());
@@ -169,6 +124,56 @@ public class ReservasFragment extends Fragment {
             }
         };
         reservas_listview.setAdapter(adapter);
+
+        /*dao.adicionarReserva(new Reserva (0, "Frifaire", new Usuario(0, "Claudinei Neto", "a@b.c", ""),
+                new Sala(613,42,"","",""),
+                new GregorianCalendar(2020, 2, 29).getTime(), new GregorianCalendar(2020, 2, 29).getTime()));*/
+
+        dialogoRemocao = new AlertDialog.Builder(getContext());
+        dialogoRemocao.setTitle("Cancelar Reserva");
+        dialogoRemocao.setMessage("Deseja cancelar essa reserva?");
+        dialogoRemocao.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //nada;
+                objReserva.getReserva();
+            }
+        });
+        dialogoRemocao.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    String json = new HttpService("/reserva/cancelar", MetodoHttp.Post,
+                        Arrays.asList("authorization","id_reserva"), Arrays.asList("secret", ""+objReserva.getReserva().getId())
+                    ).execute().get();
+                    System.out.println("Remoção de Reserva: " + json);
+                    dao.removerReserva(objReserva.getReserva());
+                    adapter.notifyDataSetChanged();
+                } catch (Exception e) {e.printStackTrace();}
+                //confirmacaoSaida.setFalse();
+            }
+        });
+        dialogoRemocao.create();
+
+
+        reservas_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+        registerForContextMenu(reservas_listview);
+
+        reservas_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //view.showContextMenu();
+                objReserva.setReserva(dao.obterReserva(position));
+
+                return false;
+            }
+        });
 
         List<Reserva> reservas = new ArrayList<>();
         try {
@@ -240,9 +245,11 @@ public class ReservasFragment extends Fragment {
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
         try {
-
-            getActivity().getMenuInflater().inflate(R.menu.lista_menu, menu);
-
+            if (getActivity() != null) {
+                getActivity().getMenuInflater().inflate(R.menu.lista_menu, menu);
+            } else {
+                throw new NullPointerException("O método \"getActivity\" retornou valor nulo.");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -257,6 +264,7 @@ public class ReservasFragment extends Fragment {
             startActivity(new Intent (getContext(), InfoReservaActivity.class));
         } else if (item.getItemId() == R.id.fragment_reservas_lista_menu_remover) {
             // Remover;
+            dialogoRemocao.show();
         }
 
         return super.onContextItemSelected(item);
@@ -264,10 +272,11 @@ public class ReservasFragment extends Fragment {
 
     //@SuppressWarnings("WeakerAccess")
 
-    private void setReservaEscolhida(Reserva reserva) {
+    private static void setReservaEscolhida(Reserva reserva) {
         ReservasFragment.reservaEscolhida = reserva;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static Reserva getReservaEscolhida() {
         return ReservasFragment.reservaEscolhida;
     }

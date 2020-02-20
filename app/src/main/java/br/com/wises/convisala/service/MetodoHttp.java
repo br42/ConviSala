@@ -6,7 +6,8 @@ public enum MetodoHttp {
     Get("GET"),
     Post("POST"),
     Put("PUT"),
-    Delete("DELETE");
+    Delete("DELETE"),
+    Patch("PATCH");
 
     private final String valor;
 
@@ -21,7 +22,7 @@ public enum MetodoHttp {
     @NonNull
     @Override
     public String toString() {
-        super.toString();
         return valor;
+        //super.toString();
     }
 }
