@@ -21,7 +21,7 @@ public class HttpCadastrarReserva extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         int responseCode = 0;
-        String wsURL = Aplicativo.baseUrl + "/reserva/cadastrar/";
+        String wsURL = Aplicativo.baseUrl + "reserva/cadastrar/";
         StringBuilder resposta = new StringBuilder();
         URL obj;
         try {

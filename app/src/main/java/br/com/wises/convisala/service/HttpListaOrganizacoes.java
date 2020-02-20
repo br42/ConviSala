@@ -19,7 +19,7 @@ public class HttpListaOrganizacoes extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         int responseCode = 0;
-        String wsURL = Aplicativo.baseUrl + "/organizacao/organizacoesByDominio/";
+        String wsURL = Aplicativo.baseUrl + "organizacao/organizacoesByDominio/";
         StringBuilder resposta = new StringBuilder();
         URL obj;
         try {

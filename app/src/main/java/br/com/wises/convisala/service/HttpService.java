@@ -3,6 +3,7 @@ package br.com.wises.convisala.service;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -18,6 +19,7 @@ public class HttpService extends AsyncTask<Void, Void, String> {
     @NonNull private MetodoHttp metodo;
     @NonNull private List<String> headers = new ArrayList<>();
     @NonNull private List<String> valores = new ArrayList<>();
+    @Nullable private String contentType;
 
     public HttpService(@NonNull String url, @NonNull MetodoHttp metodo, @NonNull List<String> headers, @NonNull List<String> valores) {
         this.url = url;

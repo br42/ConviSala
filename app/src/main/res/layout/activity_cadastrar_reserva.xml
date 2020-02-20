@@ -21,8 +21,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:hint="Descrição da Reserva"
-                />
+                android:importantForAutofill="no"
+                android:hint="Descrição da Reserva" />
 
             <EditText
                 android:id="@+id/activity_cadastrar_reserva_sala"
@@ -32,8 +32,8 @@
                 app:layout_constraintTop_toBottomOf="@id/activity_cadastrar_reserva_descricao"
                 app:layout_constraintStart_toStartOf="@id/activity_cadastrar_reserva_descricao"
                 app:layout_constraintEnd_toEndOf="@id/activity_cadastrar_reserva_descricao"
-                android:hint="ID da sala da reserva (Temporário)"
-                />
+                android:importantForAutofill="no"
+                android:hint="ID da sala da reserva (Temporário)"/>
 
             <CalendarView
                 android:id="@+id/activity_cadastrar_reserva_hora_inicio"

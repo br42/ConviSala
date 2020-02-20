@@ -49,7 +49,7 @@ public class CadastrarReservaActivity extends AppCompatActivity {
                     object.put("data_hora_fim", horaFim);
                 } catch (Exception e) {e.printStackTrace();}
 
-                String base64 = "";
+                String base64;
                 try {
                     base64 = Base64.encodeToString(object.toString().getBytes("UTF-8"), Base64.NO_WRAP);
                     System.out.println("Cadastrando Reserva: " + (new HttpCadastrarReserva(base64).execute().get()));

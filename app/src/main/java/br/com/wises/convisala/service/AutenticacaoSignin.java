@@ -28,7 +28,7 @@ public class AutenticacaoSignin extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         int responseCode = 0;
-        String wsURL = Aplicativo.baseUrl + "/usuario/cadastro";
+        String wsURL = Aplicativo.baseUrl + "usuario/cadastro";
         StringBuilder result = new StringBuilder();
         URL obj;
         try {

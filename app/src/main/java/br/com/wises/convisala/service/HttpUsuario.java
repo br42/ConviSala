@@ -22,7 +22,7 @@ public class HttpUsuario extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         int responseCode = 0;
-        String wsURL = Aplicativo.baseUrl + "/usuario/login/";
+        String wsURL = Aplicativo.baseUrl + "usuario/login/";
         StringBuilder resposta = new StringBuilder();
         URL obj;
         try {

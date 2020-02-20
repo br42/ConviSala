@@ -36,7 +36,6 @@ import br.com.wises.convisala.model.Reserva;
 import br.com.wises.convisala.dao.ReservaDAO;
 import br.com.wises.convisala.model.Sala;
 import br.com.wises.convisala.model.Usuario;
-import br.com.wises.convisala.service.HttpListaReservasPorUsuario;
 import br.com.wises.convisala.service.HttpService;
 import br.com.wises.convisala.service.MetodoHttp;
 
@@ -143,7 +142,7 @@ public class ReservasFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
-                    String json = new HttpService("/reserva/cancelar", MetodoHttp.Post,
+                    String json = new HttpService("reserva/cancelar/", MetodoHttp.Post,
                         Arrays.asList("authorization","id_reserva"), Arrays.asList("secret", ""+objReserva.getReserva().getId())
                     ).execute().get();
                     System.out.println("Remoção de Reserva: " + json);
@@ -155,11 +154,11 @@ public class ReservasFragment extends Fragment {
         });
         dialogoRemocao.create();
 
-
         reservas_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                objReserva.setReserva(dao.obterReserva(position));
+                startActivity(new Intent (getContext(), InfoReservaActivity.class));
             }
         });
 
@@ -178,7 +177,9 @@ public class ReservasFragment extends Fragment {
         List<Reserva> reservas = new ArrayList<>();
         try {
             System.out.println("ID do Usuário: " + Aplicativo.gerenciadorLogin.getUsuario().getId() + "; ");
-            String jsonSalas = new HttpListaReservasPorUsuario(Aplicativo.gerenciadorLogin.getUsuario().getId()).execute().get();
+            //String jsonSalas = new HttpListaReservasPorUsuario(Aplicativo.gerenciadorLogin.getUsuario().getId()).execute().get();
+            String jsonSalas = new HttpService("reserva/byIdUsuario/", MetodoHttp.Get,
+                Arrays.asList("authorization","id_usuario"), Arrays.asList("secret",""+Aplicativo.gerenciadorLogin.getUsuario().getId()) ).execute().get();
             System.out.println("Interpretando Salas: " + jsonSalas + "; ");
             JSONArray listaJson = new JSONArray(jsonSalas);
             JSONObject obj;
