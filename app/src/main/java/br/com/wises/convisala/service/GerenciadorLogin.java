@@ -14,6 +14,7 @@ import br.com.wises.convisala.model.Usuario;
 
 public class GerenciadorLogin {
     private boolean logado;
+    private boolean admin;
     private Organizacao organizacao = new Organizacao();
     private Usuario usuario = new Usuario();
     private SharedPreferences pref;
@@ -21,6 +22,7 @@ public class GerenciadorLogin {
 
     public GerenciadorLogin (Context context) {
         logado = false;
+        admin = false;
         pref = context.getApplicationContext().getSharedPreferences("UserLogin", 0); // 0 - for private mode
         //editor.apply();
         //EditText emailView = findViewById(R.id.login_usuario);
@@ -38,6 +40,9 @@ public class GerenciadorLogin {
                 json = new HttpUsuario(email, senha).execute().get();
                 usuario = parseUsuario(json);
                 organizacao = parseOrganizacaoUsuario(json);
+                if (true) {
+                    admin = true;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
@@ -84,9 +89,9 @@ public class GerenciadorLogin {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    /*public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
+    }*/
 
     public Organizacao getOrganizacao () {
         return this.organizacao;
@@ -96,19 +101,18 @@ public class GerenciadorLogin {
         this.organizacao = org;
     }
 
-    public boolean sair () {
+    public void sair () {
         logado = false;
-        return true;
+        admin = false;
     }
 
     public boolean isLogado () {
         return logado;
     }
 
-    public boolean isNotLogado () {
-        return !logado;
+    public boolean isAdmin() {
+        return admin;
     }
-
 
     public Usuario parseUsuario (String rawUsuario) {
         System.out.println("Interpretando: \""+rawUsuario+"\"; ");
