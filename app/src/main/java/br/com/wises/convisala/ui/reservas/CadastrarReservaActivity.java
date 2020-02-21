@@ -59,6 +59,88 @@ public class CadastrarReservaActivity extends AppCompatActivity {
             }
         });
 
+        horaInicioView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder construtor = new AlertDialog.Builder(CadastrarReservaActivity.this);
+                construtor.setView(R.layout.picker_time);
+                construtor.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            throw new UnsupportedOperationException("Botão OK Clicado!");
+                        } catch (Exception e) {e.printStackTrace();}
+                    }
+                });
+                construtor.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            throw new UnsupportedOperationException("Botão Cancelar Clicado!");
+                        } catch (Exception e) {e.printStackTrace();}
+                    }
+                });
+
+                AlertDialog dialogo = construtor.create();
+                dialogo.show();
+            }
+        });
+
+
+        dataFimView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder construtor = new AlertDialog.Builder(CadastrarReservaActivity.this);
+                construtor.setView(R.layout.picker_date);
+                construtor.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            throw new UnsupportedOperationException("Botão OK Clicado!");
+                        } catch (Exception e) {e.printStackTrace();}
+                    }
+                });
+                construtor.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            throw new UnsupportedOperationException("Botão Cancelar Clicado!");
+                        } catch (Exception e) {e.printStackTrace();}
+                    }
+                });
+
+                AlertDialog dialogo = construtor.create();
+                dialogo.show();
+            }
+        });
+
+        horaFimView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder construtor = new AlertDialog.Builder(CadastrarReservaActivity.this);
+                construtor.setView(R.layout.picker_time);
+                construtor.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            throw new UnsupportedOperationException("Botão OK Clicado!");
+                        } catch (Exception e) {e.printStackTrace();}
+                    }
+                });
+                construtor.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            throw new UnsupportedOperationException("Botão Cancelar Clicado!");
+                        } catch (Exception e) {e.printStackTrace();}
+                    }
+                });
+
+                AlertDialog dialogo = construtor.create();
+                dialogo.show();
+            }
+        });
+
         cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

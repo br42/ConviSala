@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.circularreveal.cardview.CircularRevealCardView
-        android:layout_width="360dp"
+        android:layout_width="350dp"
         android:layout_height="300dp"
         app:cardCornerRadius="20dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,8 +19,10 @@
             android:layout_height="match_parent">
 
             <CalendarView
-                android:layout_width="360dp"
+                android:layout_width="350dp"
                 android:layout_height="300dp"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
