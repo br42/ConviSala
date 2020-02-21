@@ -64,7 +64,7 @@
 
                 /-->
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/activity_cadastrar_reserva_data_inicio"
                 android:layout_width="180sp"
                 android:layout_height="48sp"
@@ -76,7 +76,7 @@
                 app:layout_constraintEnd_toStartOf="@id/activity_cadastrar_reserva_hora_inicio"
                 android:hint="Data Inicial" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/activity_cadastrar_reserva_hora_inicio"
                 android:layout_width="180sp"
                 android:layout_height="48sp"
@@ -88,7 +88,7 @@
                 app:layout_constraintEnd_toEndOf="@id/activity_cadastrar_reserva_sala"
                 android:hint="Hora Inicial" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/activity_cadastrar_reserva_data_fim"
                 android:layout_width="180sp"
                 android:layout_height="48sp"
@@ -100,7 +100,7 @@
                 app:layout_constraintEnd_toStartOf="@id/activity_cadastrar_reserva_hora_fim"
                 android:hint="Data Final" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/activity_cadastrar_reserva_hora_fim"
                 android:layout_width="180sp"
                 android:layout_height="48sp"
@@ -112,7 +112,7 @@
                 app:layout_constraintEnd_toEndOf="@id/activity_cadastrar_reserva_sala"
                 android:hint="Hora Final" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/activity_cadastrar_reserva_enviar"
                 android:layout_width="240sp"
                 android:layout_height="48sp"
