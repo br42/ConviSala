@@ -1,15 +1,18 @@
 package br.com.wises.convisala.ui.reservas;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
+
+import java.util.GregorianCalendar;
 
 import br.com.wises.convisala.Aplicativo;
 import br.com.wises.convisala.R;
@@ -24,21 +27,49 @@ public class CadastrarReservaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastrar_reserva);
 
         Button cadastrar = findViewById(R.id.activity_cadastrar_reserva_enviar);
+        Button dataInicioView = findViewById(R.id.activity_cadastrar_reserva_data_inicio);
+        Button horaInicioView = findViewById(R.id.activity_cadastrar_reserva_hora_inicio);
+        Button dataFimView = findViewById(R.id.activity_cadastrar_reserva_data_fim);
+        Button horaFimView = findViewById(R.id.activity_cadastrar_reserva_hora_fim);
+
+        dataInicioView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder construtor = new AlertDialog.Builder(CadastrarReservaActivity.this);
+                construtor.setView(R.layout.picker_date);
+                construtor.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            throw new UnsupportedOperationException("Botão OK Clicado!");
+                        } catch (Exception e) {e.printStackTrace();}
+                    }
+                });
+                construtor.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            throw new UnsupportedOperationException("Botão Cancelar Clicado!");
+                        } catch (Exception e) {e.printStackTrace();}
+                    }
+                });
+
+                AlertDialog dialogo = construtor.create();
+                dialogo.show();
+            }
+        });
 
         cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText descricaoView = findViewById(R.id.activity_cadastrar_reserva_descricao);
                 EditText salaView = findViewById(R.id.activity_cadastrar_reserva_sala);
-                CalendarView horaInicioView = findViewById(R.id.activity_cadastrar_reserva_hora_inicio);
-                CalendarView horaFimView = findViewById(R.id.activity_cadastrar_reserva_hora_fim);
 
                 String descricao = descricaoView.getText().toString();
                 int salaId = 0;
                 try {salaId = Integer.parseInt(salaView.getText().toString());} catch (Exception e) {e.printStackTrace();}
-                long horaInicio = horaInicioView.getDate();
-                long horaFim = horaFimView.getDate();
-
+                long horaInicio = GregorianCalendar.getInstance().getTimeInMillis(); //horaInicioView.getDate();
+                long horaFim = GregorianCalendar.getInstance().getTimeInMillis() + 60000; //horaFimView.getDate();
 
                 JSONObject object = new JSONObject();
                 try {
