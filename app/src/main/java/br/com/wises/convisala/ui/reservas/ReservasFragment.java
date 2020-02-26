@@ -73,10 +73,10 @@ public class ReservasFragment extends Fragment {
                 //((TextView) convertView.findViewById(R.id.item_reserva_andar)).setText(("(" + reserva.getSala().getAndar() + "º Andar)"));
 
                 try { ((TextView) convertView.findViewById(R.id.item_reserva_horario_inicio))
-                        .setText(("das " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
+                        .setText(("das " + new SimpleDateFormat("HH:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
                 } catch (Exception e) {e.printStackTrace();}
                 try { ((TextView) convertView.findViewById(R.id.item_reserva_horario_fim))
-                        .setText(("às " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraFim())));
+                        .setText(("às " + new SimpleDateFormat("HH:mm", Locale.FRANCE).format(reserva.getHoraFim())));
                 } catch (Exception e) {e.printStackTrace();}
                 try { ((TextView) convertView.findViewById(R.id.item_reserva_data_inicio))
                         .setText(("Dia " + new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).format(reserva.getHoraInicio())));
@@ -209,7 +209,7 @@ public class ReservasFragment extends Fragment {
                 reserva.setSala(new Sala());
                 reserva.getSala().setId(obj.optInt("idSala", 0));
 
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z[UTC]'", Locale.FRANCE);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z[UTC]'", Locale.FRANCE);
 
                 try {
                     Date data;
