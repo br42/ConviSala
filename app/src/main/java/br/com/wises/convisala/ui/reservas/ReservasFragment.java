@@ -76,10 +76,13 @@ public class ReservasFragment extends Fragment {
                         .setText(("das " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
                 } catch (Exception e) {e.printStackTrace();}
                 try { ((TextView) convertView.findViewById(R.id.item_reserva_horario_fim))
-                        .setText(("às " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
+                        .setText(("às " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraFim())));
                 } catch (Exception e) {e.printStackTrace();}
-                try { ((TextView) convertView.findViewById(R.id.item_reserva_data))
+                try { ((TextView) convertView.findViewById(R.id.item_reserva_data_inicio))
                         .setText(("Dia " + new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).format(reserva.getHoraInicio())));
+                } catch (Exception e) {e.printStackTrace();}
+                try { ((TextView) convertView.findViewById(R.id.item_reserva_data_fim))
+                        .setText(("ao dia " + new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).format(reserva.getHoraFim())));
                 } catch (Exception e) {e.printStackTrace();}
 
                 System.out.println(reserva.getDescricao());

@@ -47,7 +47,7 @@
                 app:layout_constraintTop_toBottomOf="@id/item_reserva_tema" />
 
             <TextView
-                android:id="@+id/item_reserva_data"
+                android:id="@+id/item_reserva_data_inicio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8sp"
@@ -58,16 +58,27 @@
                 app:layout_constraintTop_toBottomOf="@id/item_reserva_solicitador" />
 
             <TextView
+                android:id="@+id/item_reserva_data_fim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8sp"
+                android:layout_marginStart="8sp"
+                android:text="ao dia 51/15"
+                android:textSize="18sp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@id/item_reserva_data_inicio"
+                app:layout_constraintTop_toTopOf="@id/item_reserva_data_inicio" />
+
+            <TextView
                 android:id="@+id/item_reserva_horario_inicio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6sp"
-                android:layout_marginStart="6sp"
+                android:layout_marginTop="6sp"
                 android:text="das 8h"
                 android:textSize="18sp"
                 android:textStyle="italic"
-                app:layout_constraintStart_toEndOf="@id/item_reserva_data"
-                app:layout_constraintTop_toTopOf="@id/item_reserva_data" />
+                app:layout_constraintStart_toStartOf="@id/item_reserva_data_inicio"
+                app:layout_constraintTop_toBottomOf="@id/item_reserva_data_inicio" />
 
             <TextView
                 android:id="@+id/item_reserva_horario_fim"
@@ -89,8 +100,8 @@
                 android:text="Sala 207"
                 android:textSize="18sp"
                 android:textStyle="normal"
-                app:layout_constraintStart_toStartOf="@id/item_reserva_data"
-                app:layout_constraintTop_toBottomOf="@id/item_reserva_data" />
+                app:layout_constraintStart_toStartOf="@id/item_reserva_horario_inicio"
+                app:layout_constraintTop_toBottomOf="@id/item_reserva_horario_inicio" />
 
             <TextView
                 android:id="@+id/item_reserva_andar"
