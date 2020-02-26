@@ -33,6 +33,42 @@ public class SalasFragment extends Fragment {
 
     private final SalaDAO dao = new SalaDAO();
     private static Sala salaEscolhida = null;
+    private final BaseAdapter adapter = new BaseAdapter() {
+        @Override
+        public int getCount() {
+            return dao.quantiaDeSalas();
+        }
+
+        @Override
+        public Sala getItem(int posicao) {
+            return dao.obterSala(posicao);
+        }
+
+        @Override
+        public long getItemId(int posicao) {
+            return dao.obterSala(posicao).getId();
+        }
+
+        @Override
+        public View getView(int posicao, View convertView, ViewGroup parent) {
+            Sala sala = getItem(posicao);
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_sala, parent, false);
+            }
+            try {
+                ((TextView) convertView.findViewById(R.id.item_sala_nome)).setText(sala.getNome());
+                ((TextView) convertView.findViewById(R.id.item_sala_local)).setText(sala.getLocalizacao());
+                ((TextView) convertView.findViewById(R.id.item_sala_andar))
+                        .setText((sala.getOrganizacao() != null) ? (sala.getOrganizacao().getNome()) : (""));
+                ((TextView) convertView.findViewById(R.id.item_sala_bairro)).setText(("" + sala.getQuantidadePessoasSentadas() + " cadeiras"));
+                ((TextView) convertView.findViewById(R.id.item_sala_cidade)).setText(("(" + sala.getArea() + "m²)"));
+            } catch (Exception e) {
+                System.err.println("Falha ao gerar uma view no BaseAdapter da Activity SalasFragment; ");
+                e.printStackTrace();
+            }
+            return convertView;
+        }
+    };
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -69,41 +105,6 @@ public class SalasFragment extends Fragment {
         });
 
         //dao.adicionarSala(new Sala(613,42,"","",""));
-        BaseAdapter adapter = new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return dao.quantiaDeSalas();
-            }
-
-            @Override
-            public Sala getItem(int posicao) {
-                return dao.obterSala(posicao);
-            }
-
-            @Override
-            public long getItemId(int posicao) {
-                return dao.obterSala(posicao).getId();
-            }
-
-            @Override
-            public View getView(int posicao, View convertView, ViewGroup parent) {
-                Sala sala = getItem(posicao);
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_sala, parent, false);
-                }
-                try {
-                    ((TextView) convertView.findViewById(R.id.item_sala_nome)).setText(sala.getNome());
-                    ((TextView) convertView.findViewById(R.id.item_sala_local)).setText(sala.getLocalizacao());
-                    ((TextView) convertView.findViewById(R.id.item_sala_andar))
-                            .setText((sala.getOrganizacao() != null) ? (sala.getOrganizacao().getNome()) : (""));
-                    ((TextView) convertView.findViewById(R.id.item_sala_bairro)).setText(("" + sala.getQuantidadePessoasSentadas() + " cadeiras"));
-                    ((TextView) convertView.findViewById(R.id.item_sala_cidade)).setText(("(" + sala.getArea() + "m²)"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return convertView;
-            }
-        };
         home_listview.setAdapter(adapter);
 
         List<Sala> salas = new ArrayList<>();
@@ -147,6 +148,13 @@ public class SalasFragment extends Fragment {
         dao.adicionarLista(salas);
 
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        adapter.notifyDataSetChanged();
     }
 
     private void setSalaEscolhida(Sala sala) {

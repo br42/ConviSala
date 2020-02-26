@@ -19,6 +19,7 @@
             android:layout_height="match_parent">
 
             <CalendarView
+                android:id="@+id/picker_date_calendar_view"
                 android:layout_width="350dp"
                 android:layout_height="300dp"
                 android:scaleX="0.9"

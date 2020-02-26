@@ -44,6 +44,53 @@ public class ReservasFragment extends Fragment {
     private final ReservaDAO dao = new ReservaDAO();
     private static Reserva reservaEscolhida = null;
     private AlertDialog.Builder dialogoRemocao = null;
+    private final BaseAdapter adapter = new BaseAdapter() {
+        @Override
+        public int getCount() {
+            return dao.quantiaDeReservas();
+        }
+
+        @Override
+        public Reserva getItem(int posicao) {
+            return dao.obterReserva(posicao);
+        }
+
+        @Override
+        public long getItemId(int posicao) {
+            return dao.obterReserva(posicao).getId();
+        }
+
+        @Override
+        public View getView(int posicao, View convertView, ViewGroup parent) {
+            Reserva reserva = getItem(posicao);
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_reserva, parent, false);
+            }
+            try {
+                ((TextView) convertView.findViewById(R.id.item_reserva_tema)).setText(reserva.getDescricao());
+                ((TextView) convertView.findViewById(R.id.item_reserva_solicitador)).setText(("por: " + reserva.getNomeOrganizador()));
+                //((TextView) convertView.findViewById(R.id.item_reserva_sala)).setText((reserva.getSala().toString()));
+                //((TextView) convertView.findViewById(R.id.item_reserva_andar)).setText(("(" + reserva.getSala().getAndar() + "º Andar)"));
+
+                try { ((TextView) convertView.findViewById(R.id.item_reserva_horario_inicio))
+                        .setText(("das " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
+                } catch (Exception e) {e.printStackTrace();}
+                try { ((TextView) convertView.findViewById(R.id.item_reserva_horario_fim))
+                        .setText(("às " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
+                } catch (Exception e) {e.printStackTrace();}
+                try { ((TextView) convertView.findViewById(R.id.item_reserva_data))
+                        .setText(("Dia " + new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).format(reserva.getHoraInicio())));
+                } catch (Exception e) {e.printStackTrace();}
+
+                System.out.println(reserva.getDescricao());
+                System.out.println(String.format(getString(R.string.fragment_reservas_solicitador), reserva.getNomeOrganizador()));
+            } catch (Exception e) {
+                System.err.println("Falha ao gerar uma View no BaseAdapter da Activity ReservasFragment; ");
+                e.printStackTrace();
+            }
+            return convertView;
+        }
+    };;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -76,52 +123,6 @@ public class ReservasFragment extends Fragment {
         }
 
         ListView reservas_listview = root.findViewById(R.id.home_lista_reservas);
-        final BaseAdapter adapter = new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return dao.quantiaDeReservas();
-            }
-
-            @Override
-            public Reserva getItem(int posicao) {
-                return dao.obterReserva(posicao);
-            }
-
-            @Override
-            public long getItemId(int posicao) {
-                return dao.obterReserva(posicao).getId();
-            }
-
-            @Override
-            public View getView(int posicao, View convertView, ViewGroup parent) {
-                Reserva reserva = getItem(posicao);
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_reserva, parent, false);
-                }
-                try {
-                    ((TextView) convertView.findViewById(R.id.item_reserva_tema)).setText(reserva.getDescricao());
-                    ((TextView) convertView.findViewById(R.id.item_reserva_solicitador)).setText(("por: " + reserva.getNomeOrganizador()));
-                    //((TextView) convertView.findViewById(R.id.item_reserva_sala)).setText((reserva.getSala().toString()));
-                    //((TextView) convertView.findViewById(R.id.item_reserva_andar)).setText(("(" + reserva.getSala().getAndar() + "º Andar)"));
-
-                    try { ((TextView) convertView.findViewById(R.id.item_reserva_horario_inicio))
-                            .setText(("das " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
-                    } catch (Exception e) {e.printStackTrace();}
-                    try { ((TextView) convertView.findViewById(R.id.item_reserva_horario_fim))
-                            .setText(("às " + new SimpleDateFormat("hh:mm", Locale.FRANCE).format(reserva.getHoraInicio())));
-                    } catch (Exception e) {e.printStackTrace();}
-                    try { ((TextView) convertView.findViewById(R.id.item_reserva_data))
-                            .setText(("Dia " + new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).format(reserva.getHoraInicio())));
-                    } catch (Exception e) {e.printStackTrace();}
-
-                    System.out.println(reserva.getDescricao());
-                    System.out.println(String.format(getString(R.string.fragment_reservas_solicitador), reserva.getNomeOrganizador()));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return convertView;
-            }
-        };
         reservas_listview.setAdapter(adapter);
 
         /*dao.adicionarReserva(new Reserva (0, "Frifaire", new Usuario(0, "Claudinei Neto", "a@b.c", ""),
@@ -241,6 +242,13 @@ public class ReservasFragment extends Fragment {
 
         return root;
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        adapter.notifyDataSetChanged();
     }
 
     @Override
