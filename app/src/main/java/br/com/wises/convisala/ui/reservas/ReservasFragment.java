@@ -175,12 +175,20 @@ public class ReservasFragment extends Fragment {
             }
         });
 
+        return root;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         List<Reserva> reservas = new ArrayList<>();
         try {
             System.out.println("ID do Usuário: " + Aplicativo.gerenciadorLogin.getUsuario().getId() + "; ");
             //String jsonSalas = new HttpListaReservasPorUsuario(Aplicativo.gerenciadorLogin.getUsuario().getId()).execute().get();
             String jsonSalas = new HttpService("reserva/byIdUsuario/", MetodoHttp.Get,
-                Arrays.asList("authorization","id_usuario"), Arrays.asList("secret",""+Aplicativo.gerenciadorLogin.getUsuario().getId()) ).execute().get();
+                    Arrays.asList("authorization","id_usuario"), Arrays.asList("secret",""+Aplicativo.gerenciadorLogin.getUsuario().getId()) ).execute().get();
             System.out.println("Interpretando Salas: " + jsonSalas + "; ");
             JSONArray listaJson = new JSONArray(jsonSalas);
             JSONObject obj;
@@ -234,21 +242,12 @@ public class ReservasFragment extends Fragment {
                             reserva.getDescricao() + " por " + reserva.getNomeOrganizador() + "; ");
                 } catch (Exception e) {e.printStackTrace();}
             }
+            dao.limparListaReservas();
+            dao.adicionarLista(reservas);
             adapter.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        dao.adicionarLista(reservas);
-
-        return root;
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        adapter.notifyDataSetChanged();
     }
 
     @Override

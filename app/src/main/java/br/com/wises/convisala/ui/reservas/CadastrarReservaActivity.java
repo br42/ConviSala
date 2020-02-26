@@ -121,7 +121,7 @@ public class CadastrarReservaActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     //throw new UnsupportedOperationException("Botão OK Clicado!");
-                    TimePicker relogio = dialogoDataInicio.findViewById(R.id.picker_date_calendar_view);
+                    TimePicker relogio = dialogoHoraInicio.findViewById(R.id.picker_time_clock);
                     if (relogio != null) {
                         gerenciadorDatas.setHoraInicial(new SimpleDateFormat("h:m", Locale.FRANCE)
                             .parse(""+relogio.getCurrentHour()+":"+relogio.getCurrentMinute()).getTime());
@@ -148,7 +148,7 @@ public class CadastrarReservaActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     //throw new UnsupportedOperationException("Botão OK Clicado!");
-                    CalendarView calendario = dialogoDataInicio.findViewById(R.id.picker_date_calendar_view);
+                    CalendarView calendario = dialogoDataFim.findViewById(R.id.picker_date_calendar_view);
                     gerenciadorDatas.setDataFinal(calendario.getDate());
                 } catch (Exception e) {e.printStackTrace();}
             }
@@ -173,7 +173,7 @@ public class CadastrarReservaActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     //throw new UnsupportedOperationException("Botão OK Clicado!");
-                    TimePicker relogio = dialogoDataInicio.findViewById(R.id.picker_date_calendar_view);
+                    TimePicker relogio = dialogoHoraFim.findViewById(R.id.picker_time_clock);
                     if (relogio != null) {
                         gerenciadorDatas.setHoraFinal(new SimpleDateFormat("h:m", Locale.FRANCE)
                                 .parse(""+relogio.getCurrentHour()+":"+relogio.getCurrentMinute()).getTime());

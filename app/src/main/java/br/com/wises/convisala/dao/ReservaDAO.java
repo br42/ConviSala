@@ -41,4 +41,8 @@ public class ReservaDAO {
         reservaLista.remove(reserva);
     }
 
+    public void limparListaReservas () {
+        reservaLista.clear();
+    }
+
 }
