@@ -33,4 +33,10 @@ public class SalaDAO {
         return salaLista.size();
     }
 
+    public void removerSala (Sala sala) {salaLista.remove(sala);}
+
+    public void removerSala (int posicao) {salaLista.remove(posicao);}
+
+    public void limparLista () {salaLista.clear();}
+
 }

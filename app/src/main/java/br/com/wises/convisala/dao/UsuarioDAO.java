@@ -15,6 +15,10 @@ public class UsuarioDAO {
         return usuarios;
     }
 
+    public ArrayList<Usuario> obterLista() {
+        return usuarios;
+    }
+
     public void adicionarUsuario (Usuario usuario) {
         usuarios.add(usuario);
     }
@@ -33,5 +37,9 @@ public class UsuarioDAO {
 
     public int quantiaDeUsuarios () {
         return usuarios.size();
+    }
+
+    public void limparLista () {
+        usuarios.clear();
     }
 }

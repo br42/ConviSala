@@ -3,34 +3,82 @@ package br.com.wises.convisala.ui.reservas;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import br.com.wises.convisala.Aplicativo;
 import br.com.wises.convisala.R;
+import br.com.wises.convisala.dao.SalaDAO;
+import br.com.wises.convisala.model.Organizacao;
+import br.com.wises.convisala.model.Sala;
 import br.com.wises.convisala.service.HttpCadastrarReserva;
+import br.com.wises.convisala.service.HttpSalas;
 
 @SuppressWarnings("CharsetObjectCanBeUsed")
 public class CadastrarReservaActivity extends AppCompatActivity {
 
+    private final SalaDAO salaDao = new SalaDAO();
     private long dataInicial;
     private long horaInicial;
     private long dataFinal;
     private long horaFinal;
+
+    private final BaseAdapter adapter = new BaseAdapter() {
+        @Override
+        public int getCount() {
+            return salaDao.quantiaDeSalas();
+        }
+
+        @Override
+        public Sala getItem(int posicao) {
+            return salaDao.obterSala(posicao);
+        }
+
+        @Override
+        public long getItemId(int posicao) {
+            return salaDao.obterSala(posicao).getId();
+        }
+
+        @Override
+        public View getView(int posicao, View convertView, ViewGroup parent) {
+            Sala sala = getItem(posicao);
+            if (convertView == null) {
+                convertView = LayoutInflater.from(CadastrarReservaActivity.this).inflate(R.layout.item_sala, parent, false);
+            }
+            try {
+                ((TextView) convertView.findViewById(R.id.item_sala_nome)).setText(sala.getNome());
+                ((TextView) convertView.findViewById(R.id.item_sala_local)).setText(sala.getLocalizacao());
+                ((TextView) convertView.findViewById(R.id.item_sala_andar))
+                        .setText((sala.getOrganizacao() != null) ? (sala.getOrganizacao().getNome()) : (""));
+                ((TextView) convertView.findViewById(R.id.item_sala_bairro)).setText(("" + sala.getQuantidadePessoasSentadas() + " cadeiras"));
+                ((TextView) convertView.findViewById(R.id.item_sala_cidade)).setText(("(" + sala.getArea() + "m²)"));
+            } catch (Exception e) {
+                System.err.println("Falha ao gerar uma view no BaseAdapter da Activity CadastrarReservaActivity; ");
+                e.printStackTrace();
+            }
+            return convertView;
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -232,11 +280,11 @@ public class CadastrarReservaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText descricaoView = findViewById(R.id.activity_cadastrar_reserva_descricao);
-                EditText salaView = findViewById(R.id.activity_cadastrar_reserva_sala);
+                Spinner salaView = findViewById(R.id.activity_cadastrar_reserva_sala);
 
                 String descricao = descricaoView.getText().toString();
                 int salaId = 0;
-                try {salaId = Integer.parseInt(salaView.getText().toString());} catch (Exception e) {e.printStackTrace();}
+                try {salaId = (int) salaView.getSelectedItemId();} catch (Exception e) {e.printStackTrace();}
                 //long horaInicio = GregorianCalendar.getInstance().getTimeInMillis(); //horaInicioView.getDate();
                 //long horaFim = GregorianCalendar.getInstance().getTimeInMillis() + 60000; //horaFimView.getDate();
                 long horaInicio = dataInicial + horaInicial;
@@ -262,5 +310,48 @@ public class CadastrarReservaActivity extends AppCompatActivity {
             }
         });
 
+        //################################################################################################
+
+        List<Sala> salas = new ArrayList<>();
+        try {
+            String jsonSalas = new HttpSalas().execute().get();
+            System.out.println("Interpretando Salas: " + jsonSalas + "; ");
+            JSONArray listaJson = new JSONArray(jsonSalas);
+            JSONObject obj;
+            for (int i = 0; i < listaJson.length(); i++) {
+                obj = listaJson.getJSONObject(i);
+                Sala sala = new Sala();
+
+                sala.setNome(obj.optString("nome",""));
+                sala.setLocalizacao(obj.optString("localizacao",""));
+                sala.setId(obj.optInt("id",0));
+                sala.setMultimidia(obj.optBoolean("possuiMultimidia",false));
+                sala.setArCondicionado(obj.optBoolean("possuiArcon",false));
+                sala.setQuantidadePessoasSentadas(obj.optInt("quantidadePessoasSentadas",0));
+                sala.setArea(obj.optDouble("areaDaSala",0));
+                sala.setLatitude(obj.optDouble("latitude",0));
+                sala.setLongitude(obj.optDouble("longitude",0));
+
+                JSONObject organizacao = obj.optJSONObject("idOrganizacao");
+                if (organizacao != null && organizacao.length() > 0) {
+                    sala.setOrganizacao(new Organizacao(
+                            organizacao.optInt("id",0),
+                            organizacao.optString("nome",""),
+                            organizacao.optString("tipoOrganizacao","\0").charAt(0)));
+                }
+
+                salas.add(sala);
+                try {
+                    System.out.println("Salas: Sala Nº" + (i+1) + " interpretada com sucesso! " +
+                            sala.getNome() + " em " + sala.getLocalizacao() + "; ");
+                } catch (Exception e) {e.printStackTrace();}
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        salaDao.adicionarLista(salas);
+
+        Spinner listaSalas = findViewById(R.id.activity_cadastrar_reserva_sala);
+        listaSalas.setAdapter(adapter);
     }
 }
