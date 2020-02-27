@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import br.com.wises.convisala.R;
 
+@SuppressWarnings({"WeakerAccess", "FieldCanBeLocal"})
 public class ShareFragment extends Fragment {
 
     private ShareViewModel shareViewModel;

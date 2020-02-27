@@ -20,6 +20,7 @@ import br.com.wises.convisala.model.Organizacao;
 import br.com.wises.convisala.service.AutenticacaoSignin;
 import br.com.wises.convisala.service.HttpListaOrganizacoes;
 
+@SuppressWarnings("WeakerAccess")
 public class SigninActivity extends AppCompatActivity {
 
     private List<Organizacao> listaDeOrganizacoes = new ArrayList<>();

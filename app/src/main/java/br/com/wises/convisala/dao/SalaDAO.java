@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.wises.convisala.model.Sala;
 
+@SuppressWarnings("unused")
 public class SalaDAO {
 
     private final ArrayList<Sala> salaLista =  new ArrayList<>();

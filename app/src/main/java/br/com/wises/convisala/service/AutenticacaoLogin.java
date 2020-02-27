@@ -11,6 +11,7 @@ import java.net.URL;
 
 import br.com.wises.convisala.Aplicativo;
 
+@SuppressWarnings("CanBeFinal")
 public class AutenticacaoLogin extends AsyncTask<Void, Void, String> {
     @NonNull
     private String email;

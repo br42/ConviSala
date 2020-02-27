@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import java.util.Date;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class Sala {
     private Organizacao organizacao;
     private int id;

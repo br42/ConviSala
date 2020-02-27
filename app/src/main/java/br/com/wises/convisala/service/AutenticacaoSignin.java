@@ -12,6 +12,7 @@ import java.net.URL;
 
 import br.com.wises.convisala.Aplicativo;
 
+@SuppressWarnings({"unused", "CanBeFinal"})
 public class AutenticacaoSignin extends AsyncTask<Void, Void, String> {
     @NonNull private String nome;
     @NonNull private String email;

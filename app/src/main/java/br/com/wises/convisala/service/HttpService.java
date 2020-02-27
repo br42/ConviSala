@@ -14,6 +14,7 @@ import java.util.List;
 
 import br.com.wises.convisala.Aplicativo;
 
+@SuppressWarnings({"unused", "CanBeFinal"})
 public class HttpService extends AsyncTask<Void, Void, String> {
     @NonNull private String url;
     @NonNull private MetodoHttp metodo;

@@ -2,6 +2,7 @@ package br.com.wises.convisala.model;
 
 import java.util.Date;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class Reserva {
     private int id = 0;
     private Sala salaReservada = null;

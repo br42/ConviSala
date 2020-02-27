@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,7 +35,7 @@ import br.com.wises.convisala.model.Sala;
 import br.com.wises.convisala.service.HttpCadastrarReserva;
 import br.com.wises.convisala.service.HttpSalas;
 
-@SuppressWarnings("CharsetObjectCanBeUsed")
+@SuppressWarnings({"WeakerAccess", "CharsetObjectCanBeUsed"})
 public class CadastrarReservaActivity extends AppCompatActivity {
 
     private final SalaDAO salaDao = new SalaDAO();
@@ -93,6 +94,7 @@ public class CadastrarReservaActivity extends AppCompatActivity {
 
         //################################################################################################
 
+        @SuppressWarnings("unused")
         class GerenciadorDatas {
 
             public long getDataInicial() {
@@ -145,7 +147,8 @@ public class CadastrarReservaActivity extends AppCompatActivity {
                 try {
                     //throw new UnsupportedOperationException("Botão OK Clicado!");
                     CalendarView calendario = dialogoDataInicio.findViewById(R.id.picker_date_calendar_view);
-                    gerenciadorDatas.setDataInicial(calendario.getDate());
+                    if (calendario != null)
+                    {gerenciadorDatas.setDataInicial(calendario.getDate());}
                 } catch (Exception e) {e.printStackTrace();}
             }
         });
@@ -171,8 +174,11 @@ public class CadastrarReservaActivity extends AppCompatActivity {
                     //throw new UnsupportedOperationException("Botão OK Clicado!");
                     TimePicker relogio = dialogoHoraInicio.findViewById(R.id.picker_time_clock);
                     if (relogio != null) {
-                        gerenciadorDatas.setHoraInicial(new SimpleDateFormat("h:m", Locale.FRANCE)
-                            .parse(""+relogio.getCurrentHour()+":"+relogio.getCurrentMinute()).getTime());
+                        Date formatacao = new SimpleDateFormat("H:m", Locale.FRANCE)
+                            .parse("" + relogio.getCurrentHour() + ":" + relogio.getCurrentMinute());
+                        if (formatacao != null) {
+                            gerenciadorDatas.setHoraInicial(formatacao.getTime());
+                        }
                     }
                 } catch (Exception e) {e.printStackTrace();}
             }
@@ -197,7 +203,8 @@ public class CadastrarReservaActivity extends AppCompatActivity {
                 try {
                     //throw new UnsupportedOperationException("Botão OK Clicado!");
                     CalendarView calendario = dialogoDataFim.findViewById(R.id.picker_date_calendar_view);
-                    gerenciadorDatas.setDataFinal(calendario.getDate());
+                    if (calendario != null)
+                    {gerenciadorDatas.setDataFinal(calendario.getDate());}
                 } catch (Exception e) {e.printStackTrace();}
             }
         });
@@ -223,8 +230,11 @@ public class CadastrarReservaActivity extends AppCompatActivity {
                     //throw new UnsupportedOperationException("Botão OK Clicado!");
                     TimePicker relogio = dialogoHoraFim.findViewById(R.id.picker_time_clock);
                     if (relogio != null) {
-                        gerenciadorDatas.setHoraFinal(new SimpleDateFormat("h:m", Locale.FRANCE)
-                                .parse(""+relogio.getCurrentHour()+":"+relogio.getCurrentMinute()).getTime());
+                        Date formatacao = new SimpleDateFormat("H:m", Locale.FRANCE)
+                            .parse(""+relogio.getCurrentHour()+":"+relogio.getCurrentMinute());
+                        if (formatacao != null) {
+                            gerenciadorDatas.setHoraFinal(formatacao.getTime());
+                        }
                     }
                 } catch (Exception e) {e.printStackTrace();}
             }

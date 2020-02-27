@@ -12,6 +12,7 @@ import java.util.List;
 import br.com.wises.convisala.model.Organizacao;
 import br.com.wises.convisala.model.Usuario;
 
+@SuppressWarnings({"WeakerAccess", "unused", "FieldCanBeLocal", "CanBeFinal"})
 public class GerenciadorLogin {
     private boolean logado;
     private boolean admin;
@@ -40,9 +41,9 @@ public class GerenciadorLogin {
                 json = new HttpUsuario(email, senha).execute().get();
                 usuario = parseUsuario(json);
                 organizacao = parseOrganizacaoUsuario(json);
-                if (true) {
-                    admin = true;
-                }
+                //if (false) {
+                //    admin = true;
+                //}
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;

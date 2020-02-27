@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import br.com.wises.convisala.model.Usuario;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class UsuarioDAO {
     private final ArrayList<Usuario> usuarios = new ArrayList<>();
 

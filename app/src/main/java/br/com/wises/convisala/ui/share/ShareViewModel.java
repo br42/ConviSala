@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+@SuppressWarnings({"WeakerAccess", "CanBeFinal"})
 public class ShareViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;

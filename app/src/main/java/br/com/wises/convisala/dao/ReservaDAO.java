@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.wises.convisala.model.Reserva;
 
+@SuppressWarnings("unused")
 public class ReservaDAO {
 
     private final List<Reserva> reservaLista =  new ArrayList<>();

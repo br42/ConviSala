@@ -2,6 +2,7 @@ package br.com.wises.convisala.model;
 
 import androidx.annotation.Nullable;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class Usuario {
     private int id;
     private String nome;

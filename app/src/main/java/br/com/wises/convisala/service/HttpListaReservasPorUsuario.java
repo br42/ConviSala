@@ -11,6 +11,7 @@ import java.net.URL;
 
 import br.com.wises.convisala.Aplicativo;
 
+@SuppressWarnings({"unused", "CanBeFinal"})
 public class HttpListaReservasPorUsuario extends AsyncTask<Void, Void, String> {
     @NonNull private Integer id;
 

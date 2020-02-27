@@ -9,6 +9,7 @@ import java.net.URL;
 
 import br.com.wises.convisala.Aplicativo;
 
+@SuppressWarnings("CanBeFinal")
 public class HttpListaOrganizacoes extends AsyncTask<Void, Void, String> {
     @NonNull private String dominio;
 

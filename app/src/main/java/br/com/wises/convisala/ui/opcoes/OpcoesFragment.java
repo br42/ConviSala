@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import br.com.wises.convisala.R;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class OpcoesFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,

@@ -11,6 +11,7 @@ import java.net.URL;
 
 import br.com.wises.convisala.Aplicativo;
 
+@SuppressWarnings({"WeakerAccess", "CanBeFinal", "unused"})
 public class HttpListaReservasPorSala extends AsyncTask<Void, Void, String> {
     @NonNull private String dominio;
 

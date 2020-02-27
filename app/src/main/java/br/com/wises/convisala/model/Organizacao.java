@@ -1,5 +1,6 @@
 package br.com.wises.convisala.model;
 
+@SuppressWarnings("unused")
 public class Organizacao {
     private int id;
     private String nome;

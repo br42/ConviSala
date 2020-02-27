@@ -39,6 +39,7 @@ import br.com.wises.convisala.model.Usuario;
 import br.com.wises.convisala.service.HttpService;
 import br.com.wises.convisala.service.MetodoHttp;
 
+@SuppressWarnings("WeakerAccess")
 public class ReservasFragment extends Fragment {
 
     private final ReservaDAO dao = new ReservaDAO();
@@ -93,7 +94,7 @@ public class ReservasFragment extends Fragment {
             }
             return convertView;
         }
-    };;
+    };
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -112,7 +113,7 @@ public class ReservasFragment extends Fragment {
         final ObjReserva objReserva = new ObjReserva();
 
         //FloatingActionButton fab = getView().findViewById(R.id.fab);
-        FloatingActionButton fab = root.findViewById(R.id.fab);
+        FloatingActionButton fab = root.findViewById(R.id.reservas_fab);
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override

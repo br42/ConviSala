@@ -10,6 +10,7 @@ import java.net.URL;
 
 import br.com.wises.convisala.Aplicativo;
 
+@SuppressWarnings({"WeakerAccess", "CanBeFinal"})
 public class HttpUsuario extends AsyncTask<Void, Void, String> {
     @NonNull private String email;
     @NonNull private String password;

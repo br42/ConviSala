@@ -2,6 +2,7 @@ package br.com.wises.convisala.service;
 
 import androidx.annotation.NonNull;
 
+@SuppressWarnings("unused")
 public enum MetodoHttp {
     Get("GET"),
     Post("POST"),
