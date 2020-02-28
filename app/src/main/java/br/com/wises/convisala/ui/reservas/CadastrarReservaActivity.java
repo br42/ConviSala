@@ -141,7 +141,7 @@ public class CadastrarReservaActivity extends AppCompatActivity {
         // Data Inicial da Reserva;
 
         final AlertDialog dialogoDataInicio = construtor.create();
-        dialogoDataInicio.setView(getLayoutInflater().inflate(R.layout.picker_date, null));
+        dialogoDataInicio.setView(getLayoutInflater().inflate(R.layout.picker_date, dialogoDataInicio.getListView(), false));
         //dialogoDataInicio.setContentView(R.layout.picker_date);
         dialogoDataInicio.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
@@ -167,7 +167,7 @@ public class CadastrarReservaActivity extends AppCompatActivity {
 
         //construtor.setView();
         final AlertDialog dialogoHoraInicio = construtor.create();
-        dialogoHoraInicio.setView(getLayoutInflater().inflate(R.layout.picker_time, null));
+        dialogoHoraInicio.setView(getLayoutInflater().inflate(R.layout.picker_time, dialogoHoraInicio.getListView(), false));
         //dialogoHoraInicio.setContentView(R.layout.picker_date);
         dialogoHoraInicio.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
@@ -197,7 +197,7 @@ public class CadastrarReservaActivity extends AppCompatActivity {
         // Data Final da Reserva;
 
         final AlertDialog dialogoDataFim = construtor.create();
-        dialogoDataFim.setView(getLayoutInflater().inflate(R.layout.picker_date, null));
+        dialogoDataFim.setView(getLayoutInflater().inflate(R.layout.picker_date, dialogoDataFim.getListView(), false));
         //dialogoDataFim.setContentView(R.layout.picker_date);
         dialogoDataFim.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
@@ -223,7 +223,7 @@ public class CadastrarReservaActivity extends AppCompatActivity {
 
         //construtor.setView();
         final AlertDialog dialogoHoraFim = construtor.create();
-        dialogoHoraFim.setView(getLayoutInflater().inflate(R.layout.picker_time, dialogoHoraFim.getListView()));
+        dialogoHoraFim.setView(getLayoutInflater().inflate(R.layout.picker_time, dialogoHoraFim.getListView(), false));
         //dialogoHoraFim.setContentView(R.layout.picker_date);
         dialogoHoraFim.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
@@ -308,24 +308,26 @@ public class CadastrarReservaActivity extends AppCompatActivity {
 
                  else if (horaFim <= horaInicio) {
                     Snackbar.make(v, "Duração inválida. Cheque a data e hora inicial e final da reserva.", Snackbar.LENGTH_LONG).show();
+                } else {
+
+                    JSONObject object = new JSONObject();
+                    try {
+                        object.put("descricao", descricao);
+                        object.put("id_sala", salaId);
+                        object.put("id_usuario", Aplicativo.gerenciadorLogin.getUsuario().getId());
+                        object.put("data_hora_inicio", horaInicio);
+                        object.put("data_hora_fim", horaFim);
+                    } catch (Exception e) {e.printStackTrace();}
+
+                    String base64;
+                    try {
+                        base64 = Base64.encodeToString(object.toString().getBytes("UTF-8"), Base64.NO_WRAP);
+                        System.out.println("Cadastrando Reserva: " + (new HttpCadastrarReserva(base64).execute().get()));
+                        System.out.println("Reserva em Base64: " + base64);
+                        finish();
+                    } catch (Exception e) {e.printStackTrace();}
+
                 }
-
-                JSONObject object = new JSONObject();
-                try {
-                    object.put("descricao", descricao);
-                    object.put("id_sala", salaId);
-                    object.put("id_usuario", Aplicativo.gerenciadorLogin.getUsuario().getId());
-                    object.put("data_hora_inicio", horaInicio);
-                    object.put("data_hora_fim", horaFim);
-                } catch (Exception e) {e.printStackTrace();}
-
-                String base64;
-                try {
-                    base64 = Base64.encodeToString(object.toString().getBytes("UTF-8"), Base64.NO_WRAP);
-                    System.out.println("Cadastrando Reserva: " + (new HttpCadastrarReserva(base64).execute().get()));
-                    System.out.println("Reserva em Base64: " + base64);
-                    finish();
-                } catch (Exception e) {e.printStackTrace();}
 
             }
         });
