@@ -38,7 +38,7 @@
             <TextView
                 android:id="@+id/activity_cadastrar_reserva_sala_legenda"
                 android:layout_width="wrap_content"
-                android:layout_height="48sp"
+                android:layout_height="64sp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintTop_toBottomOf="@id/activity_cadastrar_reserva_descricao"
                 app:layout_constraintStart_toStartOf="@id/activity_cadastrar_reserva_descricao"
@@ -52,7 +52,7 @@
             <Spinner
                 android:id="@+id/activity_cadastrar_reserva_sala"
                 android:layout_width="0dp"
-                android:layout_height="48sp"
+                android:layout_height="64sp"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="16sp"
                 android:layout_marginStart="16sp"

@@ -21,7 +21,7 @@ import br.com.wises.convisala.service.AutenticacaoSignin;
 import br.com.wises.convisala.service.HttpListaOrganizacoes;
 
 @SuppressWarnings("WeakerAccess")
-public class SigninActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
 
     private List<Organizacao> listaDeOrganizacoes = new ArrayList<>();
     BaseAdapter adapter = null;
@@ -31,7 +31,7 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signin);
+        setContentView(R.layout.activity_signup);
 
         Button signup = findViewById(R.id.signup_cadastrar);
         signup.setOnClickListener(new View.OnClickListener() {
@@ -170,13 +170,13 @@ public class SigninActivity extends AppCompatActivity {
                 Organizacao organizacao = getItem(posicao);
                 if (organizacao == null || (organizacao.getNome().equals("") && organizacao.getId() == 0 && organizacao.getTipoOrganizacao() == 0)) {
                     if (convertView == null) {
-                        convertView = LayoutInflater.from(SigninActivity.this).inflate(R.layout.item_organizacao, parent, false);
+                        convertView = LayoutInflater.from(SignupActivity.this).inflate(R.layout.item_organizacao, parent, false);
                         //convertView.setVisibility(View.INVISIBLE);
                     }
                     return convertView;
                 } else {
                     if (convertView == null) {
-                        convertView = LayoutInflater.from(SigninActivity.this).inflate(R.layout.item_organizacao, parent, false);
+                        convertView = LayoutInflater.from(SignupActivity.this).inflate(R.layout.item_organizacao, parent, false);
                     }
                     ((TextView) convertView.findViewById(R.id.item_organizacao_nome)).setText(organizacao.getNome());
                     ((TextView) convertView.findViewById(R.id.item_organizacao_tipo))

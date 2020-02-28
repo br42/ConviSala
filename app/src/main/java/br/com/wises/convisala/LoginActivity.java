@@ -84,8 +84,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 System.out.println(status);
 
+                int idOrganizacao = Aplicativo.gerenciadorLogin.parseOrganizacaoUsuario(status).getId();
+
                 //if (usuario.validar(referencia)) {
-                if (status.equals("Login efetuado com sucesso!") && Aplicativo.gerenciadorLogin.entrar(email, senhaView.getText().toString())) {
+                /*if (status.equals("Login efetuado com sucesso!") &&*/
+                if (idOrganizacao != 0 && Aplicativo.gerenciadorLogin.entrar(email, senhaView.getText().toString())) {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
             }
@@ -95,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         criarConta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SigninActivity.class));
+                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
             }
         });
 

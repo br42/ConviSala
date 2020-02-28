@@ -18,6 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -221,7 +223,7 @@ public class CadastrarReservaActivity extends AppCompatActivity {
 
         //construtor.setView();
         final AlertDialog dialogoHoraFim = construtor.create();
-        dialogoHoraFim.setView(getLayoutInflater().inflate(R.layout.picker_time, null));
+        dialogoHoraFim.setView(getLayoutInflater().inflate(R.layout.picker_time, dialogoHoraFim.getListView()));
         //dialogoHoraFim.setContentView(R.layout.picker_date);
         dialogoHoraFim.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
@@ -299,6 +301,14 @@ public class CadastrarReservaActivity extends AppCompatActivity {
                 //long horaFim = GregorianCalendar.getInstance().getTimeInMillis() + 60000; //horaFimView.getDate();
                 long horaInicio = dataInicial + horaInicial;
                 long horaFim = dataFinal + horaFinal;
+
+                if (salaId <= 0) {
+                    Snackbar.make(v, "Sala Inválida", Snackbar.LENGTH_LONG).show();
+                }
+
+                 else if (horaFim <= horaInicio) {
+                    Snackbar.make(v, "Duração inválida. Cheque a data e hora inicial e final da reserva.", Snackbar.LENGTH_LONG).show();
+                }
 
                 JSONObject object = new JSONObject();
                 try {
