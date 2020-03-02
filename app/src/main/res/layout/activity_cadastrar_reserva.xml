@@ -152,8 +152,8 @@
                 android:hint="Enviar" /-->
 
             <com.google.android.material.button.MaterialButton
-                android:theme="@style/AppTheme.ColorButton"
                 android:id="@+id/activity_cadastrar_reserva_enviar"
+                android:theme="@style/AppTheme.ColorButton"
                 android:gravity="center"
                 android:textColorHint="@android:color/tertiary_text_light"
                 android:layout_width="240sp"
