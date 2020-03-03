@@ -20,7 +20,7 @@ import br.com.wises.convisala.model.Organizacao;
 import br.com.wises.convisala.service.AutenticacaoSignin;
 import br.com.wises.convisala.service.HttpListaOrganizacoes;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings("unused")
 public class SignupActivity extends AppCompatActivity {
 
     private List<Organizacao> listaDeOrganizacoes = new ArrayList<>();
@@ -48,7 +48,7 @@ public class SignupActivity extends AppCompatActivity {
                 String dominio = "";
                 String resultado = "";
 
-                if (emailDigitado.contains("@") && emailDigitado.indexOf(".") > emailDigitado.indexOf("@")) {
+                /*if (emailDigitado.contains("@") && emailDigitado.indexOf(".") > emailDigitado.indexOf("@")) {
                     if ((emailDigitado.length() > 1) && (emailDigitado.indexOf("@") < (emailDigitado.length() - 1))) {
                         dominio = emailDigitado.split("@")[1];
                     }
@@ -67,7 +67,7 @@ public class SignupActivity extends AppCompatActivity {
                         //findViewById(R.id.signup_container_spinner).setVisibility(View.VISIBLE);
                         dialogo.show();
 
-                    } else {
+                    } else*/ {
                         System.out.println("Tamanho da listaDeOrganizacoes: " + listaDeOrganizacoes.size());
                         for (int i = 0; i < listaDeOrganizacoes.size(); i++) {
                             System.out.println("Itens: " + listaDeOrganizacoes.get(i));
@@ -95,7 +95,7 @@ public class SignupActivity extends AppCompatActivity {
                         finish();
                     }
                 }
-            }
+            //}
 
             //if (usuario.validar(referencia)) {
             /*if (status.equals("Login efetuado com sucesso!")) {
@@ -104,7 +104,7 @@ public class SignupActivity extends AppCompatActivity {
             }*/
         });
 
-        /*final EditText entradaEmail = findViewById(R.id.signup_email);
+        final EditText entradaEmail = findViewById(R.id.signup_email);
 
         entradaEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -132,7 +132,7 @@ public class SignupActivity extends AppCompatActivity {
 
                             //findViewById(R.id.signup_container_spinner).setVisibility(View.VISIBLE);
                             dialogo.show();
-                            spinnerAberto = true;
+                            //spinnerAberto = true;
 
                         }
                     }
@@ -144,7 +144,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 }
             }
-        });*/
+        });
 
         //Spinner signup_spinner = findViewById(R.id.signup_spinner);
 

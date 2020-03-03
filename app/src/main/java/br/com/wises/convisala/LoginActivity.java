@@ -15,20 +15,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //####################################################################
-        // Código da Gambiarra:
-        // (Permite ignorar a exception android.os.NetworkOnMainThreadException);
-        // {
-
-        /*if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy =
-                    new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }*/
-
-        // }
-        //####################################################################
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
