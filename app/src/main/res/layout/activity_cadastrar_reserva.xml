@@ -91,49 +91,53 @@
 
                 /-->
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/activity_cadastrar_reserva_data_inicio"
+                style="@style/AppTheme.MaterialButtonOutlined"
                 android:layout_width="160sp"
                 android:layout_height="48sp"
-                android:layout_marginTop="18dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintTop_toBottomOf="@id/activity_cadastrar_reserva_sala"
                 app:layout_constraintStart_toStartOf="@id/activity_cadastrar_reserva_sala_legenda"
                 app:layout_constraintEnd_toStartOf="@id/activity_cadastrar_reserva_hora_inicio"
                 android:hint="Data Inicial" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/activity_cadastrar_reserva_hora_inicio"
+                style="@style/AppTheme.MaterialButtonOutlined"
                 android:layout_width="160sp"
                 android:layout_height="48sp"
-                android:layout_marginTop="18dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginStart="4dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 app:layout_constraintTop_toBottomOf="@id/activity_cadastrar_reserva_sala"
                 app:layout_constraintStart_toEndOf="@id/activity_cadastrar_reserva_data_inicio"
                 app:layout_constraintEnd_toEndOf="@id/activity_cadastrar_reserva_sala"
                 android:hint="Hora Inicial" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/activity_cadastrar_reserva_data_fim"
+                style="@style/AppTheme.MaterialButtonOutlined"
                 android:layout_width="160sp"
                 android:layout_height="48sp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintTop_toBottomOf="@id/activity_cadastrar_reserva_data_inicio"
                 app:layout_constraintStart_toStartOf="@id/activity_cadastrar_reserva_sala_legenda"
                 app:layout_constraintEnd_toStartOf="@id/activity_cadastrar_reserva_hora_fim"
                 android:hint="Data Final" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/activity_cadastrar_reserva_hora_fim"
+                style="@style/AppTheme.MaterialButtonOutlined"
                 android:layout_width="160sp"
                 android:layout_height="48sp"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginStart="4dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 app:layout_constraintTop_toBottomOf="@id/activity_cadastrar_reserva_hora_inicio"
                 app:layout_constraintStart_toEndOf="@id/activity_cadastrar_reserva_data_fim"
                 app:layout_constraintEnd_toEndOf="@id/activity_cadastrar_reserva_sala"
@@ -153,7 +157,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/activity_cadastrar_reserva_enviar"
-                android:theme="@style/AppTheme.ColorButton"
+                style="@style/AppTheme.ColorButton"
                 android:gravity="center"
                 android:textColorHint="@android:color/tertiary_text_light"
                 android:layout_width="240sp"
