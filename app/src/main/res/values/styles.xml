@@ -34,18 +34,23 @@
 
     <style name="AppTheme.ColorButton" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:textColorHint">@android:color/tertiary_text_light</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
         <item name="android:textAlignment" tools:targetApi="17">center</item>
         <!--item name="android:background">@android:color/background_light</item>
         <item name="android:backgroundTint" tools:targetApi="21">@android:color/background_light</item>
         <item name="android:backgroundTintMode" tools:targetApi="21">src_in</item-->
         <item name="cornerRadius">10dp</item>
 
-        <item name="backgroundTint" tools:targetApi="21">#67c2ff</item>
+        <item name="backgroundTint" tools:targetApi="21">@color/colorAccent</item>
+        <item name="rippleColor" tools:targetApi="21">@color/colorAccent</item>
+
+        <item name="colorAccent" tools:targetApi="15">@color/colorAccent</item>
+
+        <!--item name="backgroundTint" tools:targetApi="21">#67c2ff</item>
         <item name="rippleColor" tools:targetApi="21">#67c2ff</item>
 
-        <item name="colorAccent" tools:targetApi="15">#67c2ff</item>
+        <item name="colorAccent" tools:targetApi="15">#67c2ff</item-->
     </style>
 
     <style name="AppTheme.MaterialButton" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
