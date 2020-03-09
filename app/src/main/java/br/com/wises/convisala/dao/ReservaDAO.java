@@ -57,7 +57,7 @@ public class ReservaDAO {
         for (Reserva j : reservaLista) {
             Reserva reserva = null;
             int i = 0;
-            for (i = 0; i < reservaLista.size(); i++) {
+            for (; i < reservaLista.size(); i++) {
                 Reserva reservaTemp = reservaLista.get(i);
                 if (!itensUsados.get(i) && // Se não for repetido,
                         ((reserva == null) || // O item não for nulo e...

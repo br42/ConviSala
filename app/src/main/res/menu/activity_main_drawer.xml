@@ -12,17 +12,17 @@
             android:id="@+id/nav_salas"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_salas" />
-        <item
+        <!--item
             android:id="@+id/nav_perfil"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_perfil" />
         <item
             android:id="@+id/nav_opcoes"
             android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_opcoes" />
+            android:title="@string/menu_opcoes" /-->
     </group>
 
-    <item android:title="@string/communicate">
+    <!--item android:title="@string/communicate">
         <menu>
             <item
                 android:id="@+id/nav_share"
@@ -33,6 +33,6 @@
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/menu_send" />
         </menu>
-    </item>
+    </item-->
 
 </menu>

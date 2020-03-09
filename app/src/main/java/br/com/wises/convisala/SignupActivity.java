@@ -3,6 +3,7 @@ package br.com.wises.convisala;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,17 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import br.com.wises.convisala.model.Organizacao;
-import br.com.wises.convisala.service.AutenticacaoSignin;
 import br.com.wises.convisala.service.HttpListaOrganizacoes;
+import br.com.wises.convisala.service.HttpService;
+import br.com.wises.convisala.service.MetodoHttp;
 
 @SuppressWarnings("unused")
 public class SignupActivity extends AppCompatActivity {
@@ -44,58 +51,63 @@ public class SignupActivity extends AppCompatActivity {
                 //Spinner spinnerFiliais = findViewById(R.id.signup_spinner);
                 //Usuario referencia = new Usuario("Clovis", "clovis@wises.com.br", "wisesys");
 
-                String emailDigitado = emailView.getText().toString();
+                //String nome = emailView.getText().toString();
+                String email = emailView.getText().toString();
+                //String senha = emailView.getText().toString();
                 String dominio = "";
                 String resultado = "";
 
-                /*if (emailDigitado.contains("@") && emailDigitado.indexOf(".") > emailDigitado.indexOf("@")) {
-                    if ((emailDigitado.length() > 1) && (emailDigitado.indexOf("@") < (emailDigitado.length() - 1))) {
-                        dominio = emailDigitado.split("@")[1];
+                if (nomeView.getText().toString().equals("")){
+                    Snackbar.make(v, "É necessário digitar um nome de usuário!", Snackbar.LENGTH_LONG).show();
+                } else if (email.equals("")){
+                    Snackbar.make(v, "É necessário digitar o email!", Snackbar.LENGTH_LONG).show();
+                } else if (senhaView.getText().toString().equals("")){
+                    Snackbar.make(v, "É necessário digitar uma senha!", Snackbar.LENGTH_LONG).show();
+                } else if (organizacao == 0){
+                    Snackbar.make(v, "É necessário escolher uma organização!", Snackbar.LENGTH_LONG).show();
+                } else {
+                    System.out.println("Tamanho da listaDeOrganizacoes: " + listaDeOrganizacoes.size());
+                    for (int i = 0; i < listaDeOrganizacoes.size(); i++) {
+                        System.out.println("Itens: " + listaDeOrganizacoes.get(i));
                     }
-                    System.out.println("Domínio Inserido: " + dominio);
-
-                    if (organizacao == 0) {
-                        try {
-                            resultado = (new HttpListaOrganizacoes(dominio)).execute().get();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        System.out.println(resultado);
-                        listaDeOrganizacoes = Aplicativo.gerenciadorLogin.parseOrganizacoesArray(resultado);
-                        adapter.notifyDataSetChanged();
-
-                        //findViewById(R.id.signup_container_spinner).setVisibility(View.VISIBLE);
-                        dialogo.show();
-
-                    } else*/ {
-                        System.out.println("Tamanho da listaDeOrganizacoes: " + listaDeOrganizacoes.size());
-                        for (int i = 0; i < listaDeOrganizacoes.size(); i++) {
-                            System.out.println("Itens: " + listaDeOrganizacoes.get(i));
-                        }
 
 
-                        /*String dominio = "";
-                        String email = emailView.getText().toString();
-                        if (email.contains("@") && email.indexOf(".") > email.indexOf("@")) {
-                            dominio = email.split("@")[1];
-                        }*/
+                    /*String dominio = "";
+                    String email = emailView.getText().toString();
+                    if (email.contains("@") && email.indexOf(".") > email.indexOf("@")) {
+                        dominio = email.split("@")[1];
+                    }*/
 
-                        String status = "";
-                        try {
-                            status = (new AutenticacaoSignin(nomeView.getText().toString(), emailView.getText().toString(),
-                                    senhaView.getText().toString(), dominio))
-                                    .execute().get();
-                            //makeAuthRequest("clovis@wises.com.br", "123");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                    String status = "";
+                    try {
 
-                        System.out.println(status);
+                        JSONObject usuarioJson = new JSONObject();
+                        usuarioJson.put("nome", nomeView.getText().toString());
+                        usuarioJson.put("email", email);
+                        usuarioJson.put("senha", senhaView.getText().toString());
+                        usuarioJson.put("idOrganizacao", organizacao);
 
-                        finish();
+                        @SuppressWarnings("CharsetObjectCanBeUsed")
+                        String usuarioBase64 = Base64.encodeToString(usuarioJson.toString().getBytes("UTF-8"), Base64.NO_WRAP);
+
+                        status = new HttpService("usuario/cadastro/", MetodoHttp.Post,
+                            Arrays.asList("Content-Type","authorization", "novoUsuario"),
+                            Arrays.asList("application/json","secret", usuarioBase64))
+                        .execute().get();
+
+                        /*status = (new AutenticacaoSignin(nomeView.getText().toString(), emailView.getText().toString(),
+                                senhaView.getText().toString(), dominio))
+                                .execute().get();*/
+                        //makeAuthRequest("clovis@wises.com.br", "123");
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
+                    System.out.println(status);
+
+                    finish();
                 }
-            //}
+            }
 
             //if (usuario.validar(referencia)) {
             /*if (status.equals("Login efetuado com sucesso!")) {
@@ -114,7 +126,7 @@ public class SignupActivity extends AppCompatActivity {
                     String dominio = "";
                     String resultado = "";
 
-                    if (emailDigitado.contains("@") && emailDigitado.indexOf(".") > emailDigitado.indexOf("@")) {
+                    if (emailDigitado.contains("@") /*&& emailDigitado.indexOf(".") > emailDigitado.indexOf("@")*/) {
                         if ((emailDigitado.length() > 1) && (emailDigitado.indexOf("@") < (emailDigitado.length() - 1))) {
                             dominio = emailDigitado.split("@")[1];
                         }
@@ -198,6 +210,81 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
+        dialogo.create();
+
+    }
+}
+
+    /*Button signup = findViewById(R.id.signup_cadastrar);
+    signup.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+                EditText nomeView = findViewById(R.id.signup_usuario);
+                EditText emailView = findViewById(R.id.signup_email);
+                EditText senhaView = findViewById(R.id.signup_senha);
+
+                //Spinner spinnerFiliais = findViewById(R.id.signup_spinner);
+                //Usuario referencia = new Usuario("Clovis", "clovis@wises.com.br", "wisesys");
+
+                String emailDigitado = emailView.getText().toString();
+                String dominio = "";
+                String resultado = "";
+
+                        /*if (emailDigitado.contains("@") && emailDigitado.indexOf(".") > emailDigitado.indexOf("@")) {
+                            if ((emailDigitado.length() > 1) && (emailDigitado.indexOf("@") < (emailDigitado.length() - 1))) {
+                                dominio = emailDigitado.split("@")[1];
+                            }
+                            System.out.println("Domínio Inserido: " + dominio);
+
+                            if (organizacao == 0) {
+                                try {
+                                    resultado = (new HttpListaOrganizacoes(dominio)).execute().get();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                System.out.println(resultado);
+                                listaDeOrganizacoes = Aplicativo.gerenciadorLogin.parseOrganizacoesArray(resultado);
+                                adapter.notifyDataSetChanged();
+
+                                //findViewById(R.id.signup_container_spinner).setVisibility(View.VISIBLE);
+                                dialogo.show();
+
+                            } else*//* {
+                System.out.println("Tamanho da listaDeOrganizacoes: " + listaDeOrganizacoes.size());
+                for (int i = 0; i < listaDeOrganizacoes.size(); i++) {
+                System.out.println("Itens: " + listaDeOrganizacoes.get(i));
+                }
+
+
+                                /*String dominio = "";
+                                String email = emailView.getText().toString();
+                                if (email.contains("@") && email.indexOf(".") > email.indexOf("@")) {
+                                    dominio = email.split("@")[1];
+                                }*//*
+
+                String status = "";
+                try {
+                status = (new AutenticacaoSignin(nomeView.getText().toString(), emailView.getText().toString(),
+                senhaView.getText().toString(), dominio))
+                .execute().get();
+                //makeAuthRequest("clovis@wises.com.br", "123");
+                } catch (Exception e) {
+                e.printStackTrace();
+                }
+
+                System.out.println(status);
+
+                finish();
+            }
+        }
+        //}
+
+        //if (usuario.validar(referencia)) {
+            /*if (status.equals("Login efetuado com sucesso!")) {
+                Aplicativo.logado = true;
+                startActivity(new Intent(SigninActivity.this, MainActivity.class));
+            }*//*
+        });*/
 
         /*dialogo.setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener() {
             @Override
@@ -211,11 +298,6 @@ public class SignupActivity extends AppCompatActivity {
 
             }
         });*/
-
-        dialogo.create();
-
-    }
-}
 
         //signup_spinner.setAdapter(adapter);
 
