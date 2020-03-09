@@ -152,6 +152,7 @@ public class ReservasFragment extends Fragment {
                     ).execute().get();
                     System.out.println("Remoção de Reserva: " + json);
                     dao.removerReserva(objReserva.getReserva());
+                    //dao.organizarLista();
                     adapter.notifyDataSetChanged();
                 } catch (Exception e) {e.printStackTrace();}
                 //confirmacaoSaida.setFalse();
@@ -248,6 +249,7 @@ public class ReservasFragment extends Fragment {
             }
             dao.limparListaReservas();
             dao.adicionarLista(reservas);
+            dao.organizarLista();
             adapter.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();
