@@ -111,8 +111,10 @@ public class SignupActivity extends AppCompatActivity {
 
             //if (usuario.validar(referencia)) {
             /*if (status.equals("Login efetuado com sucesso!")) {
+
                 Aplicativo.logado = true;
                 startActivity(new Intent(SigninActivity.this, MainActivity.class));
+
             }*/
         });
 
